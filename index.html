@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nguyen Ba Hieu</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --font-display:'Instrument Serif',serif;
+  --font-body:'Inter',sans-serif;
+  --c1:#ff6b6b;--c2:#ffd93d;--c3:#6bcb77;--c4:#4d96ff;
+  --dark:#0f0f1a;--mid:#16172a;--card:#1c1e30;--text:#eaeaea;--muted:#8888aa;
+  --muted-foreground:240 4% 66%;
+}
+body{font-family:var(--font-body);background:var(--dark);color:var(--text);overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}
+
+/* ── LIQUID GLASS ── */
+.liquid-glass{background:rgba(255,255,255,0.01);background-blend-mode:luminosity;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:none;box-shadow:inset 0 1px 1px rgba(255,255,255,0.1);position:relative;overflow:hidden;}
+.liquid-glass::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.4px;background:linear-gradient(180deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.15) 80%,rgba(255,255,255,.45) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;}
+@supports not ((-webkit-mask-composite:xor) or (mask-composite:exclude)){
+  .liquid-glass{border:1px solid rgba(255,255,255,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.12);}
+  .liquid-glass::before{display:none;}
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fade-rise{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.animate-fade-rise{animation:fade-rise .8s ease-out both;}
+.animate-fade-rise-delay{animation:fade-rise .8s ease-out .2s both;}
+.animate-fade-rise-delay-2{animation:fade-rise .8s ease-out .4s both;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+/* ══ HERO ══ */
+#hero{position:relative;width:100%;min-height:100vh;overflow:hidden;display:flex;flex-direction:column;background:#0a0a14;}
+#hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+#hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.42);z-index:1;}
+
+.cinema-nav{position:relative;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 2rem;max-width:1280px;margin:0 auto;width:100%;}
+.cinema-logo{font-family:var(--font-display);font-size:1.8rem;letter-spacing:-.02em;color:#fff;}
+.cinema-logo sup{font-size:.65rem;vertical-align:super;}
+.cinema-nav-links{display:none;}
+@media(min-width:768px){.cinema-nav-links{display:flex;gap:1.8rem;font-size:.82rem;color:hsl(var(--muted-foreground));}.cinema-nav-links a{transition:color .2s;}.cinema-nav-links a:hover,.cinema-nav-links a.active{color:#fff;}}
+.cinema-cta-nav{border-radius:999px;padding:.5rem 1.3rem;font-size:.8rem;color:#fff;cursor:pointer;}
+
+.cinema-hero-body{position:relative;z-index:10;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem 1.5rem 5rem;}
+.cinema-hero-body h1{font-family:var(--font-display);font-size:clamp(2.6rem,7.5vw,5.8rem);line-height:.95;letter-spacing:-2.46px;font-weight:400;color:#fff;max-width:1000px;}
+.cinema-hero-body h1 em{font-style:normal;color:hsl(var(--muted-foreground));}
+.cinema-sub{color:hsl(var(--muted-foreground));font-size:clamp(.88rem,1.4vw,1.05rem);max-width:520px;margin-top:2rem;line-height:1.7;}
+.cinema-cta-hero{border-radius:999px;padding:1rem 3.2rem;font-size:.95rem;color:#fff;cursor:pointer;margin-top:2.8rem;transition:transform .2s;}
+.cinema-cta-hero:hover{transform:scale(1.03);}
+
+/* ══ SHARED ══ */
+section.content-sec{padding:5rem 2rem;}
+.sec-label{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--c2);margin-bottom:.4rem;font-weight:600;}
+.sec-title{font-family:var(--font-display);font-size:2.1rem;font-weight:400;margin-bottom:.4rem;}
+.sec-sub{color:var(--muted);font-size:.88rem;margin-bottom:2.5rem;line-height:1.65;}
+.center{text-align:center;}
+
+/* ══ ABOUT ══ */
+.about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.1rem;max-width:920px;margin:0 auto 2rem;}
+.about-card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:1.3rem;transition:.25s;}
+.about-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.14);}
+.about-card .ico{font-size:1.4rem;margin-bottom:.6rem;}
+.about-card h3{font-size:.9rem;font-weight:500;margin-bottom:.3rem;}
+.about-card p{font-size:.8rem;color:var(--muted);line-height:1.6;}
+.pills{display:flex;flex-wrap:wrap;gap:.45rem;max-width:920px;margin:0 auto;}
+.pill{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:999px;padding:.26rem .78rem;font-size:.74rem;color:var(--muted);}
+.lang-row{display:flex;justify-content:center;gap:.5rem;margin-top:1.2rem;flex-wrap:wrap;}
+.lang{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:999px;padding:.26rem .78rem;font-size:.73rem;color:var(--muted);}
+
+/* ══ PROJECTS ══ */
+.projects-sec{background:var(--mid);}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.3rem;max-width:960px;margin:0 auto;}
+.proj-card{background:var(--dark);border:1px solid rgba(255,255,255,.07);border-radius:18px;overflow:hidden;transition:.25s;}
+.proj-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.15);}
+.proj-thumb{height:130px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;position:relative;}
+.t1{background:linear-gradient(135deg,#ff6b6b18,#ffd93d18);}
+.t2{background:linear-gradient(135deg,#a29bfe18,#fd79a818);}
+.t3{background:linear-gradient(135deg,#4d96ff18,#6bcb7718);}
+.sbadge{position:absolute;top:.65rem;right:.65rem;font-size:.65rem;padding:.18rem .58rem;border-radius:999px;font-weight:700;}
+.done{background:rgba(107,203,119,.15);color:#6bcb77;}
+.ongoing{background:rgba(255,217,61,.12);color:#ffd93d;}
+.lazy{background:rgba(255,107,107,.12);color:#ff6b6b;}
+.proj-body{padding:1.1rem;}
+.proj-cat{font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem;}
+.proj-body h3{font-size:.94rem;font-weight:500;margin-bottom:.3rem;}
+.proj-body p{font-size:.8rem;color:var(--muted);line-height:1.55;}
+.proj-credit{font-size:.7rem;color:rgba(255,217,61,.55);margin-top:.4rem;font-style:italic;}
+.proj-tags{display:flex;flex-wrap:wrap;gap:.38rem;margin-top:.7rem;}
+.ptag{font-size:.66rem;padding:.18rem .55rem;border-radius:999px;border:1px solid rgba(255,255,255,.1);color:var(--muted);}
+
+/* ══ MOVIES ══ */
+.movies-sec{background:var(--dark);}
+.media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:1.4rem;max-width:1040px;margin:0 auto;}
+.media-card{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:18px;overflow:hidden;transition:.25s;display:flex;flex-direction:column;}
+.media-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.16);}
+.media-banner{height:120px;display:flex;align-items:flex-end;padding:.9rem 1.1rem;position:relative;overflow:hidden;}
+.media-num{font-family:var(--font-display);font-size:3.2rem;font-weight:400;line-height:1;opacity:.16;position:absolute;right:.9rem;top:.4rem;color:#fff;}
+.media-year{font-size:.68rem;background:rgba(255,255,255,.1);border-radius:999px;padding:.18rem .58rem;color:rgba(255,255,255,.6);font-weight:500;}
+.m1{background:linear-gradient(135deg,#1a0a00,#5c2d00);background-image:url('https://i.imgur.com/nArYRG8.jpg');background-size:cover;background-position:center;}
+.m2{background:linear-gradient(135deg,#0a0015,#3b0066);background-image:url('https://media.giphy.com/media/l3vRaHTeHMH0fQ9fG/giphy.gif');background-size:cover;background-position:center;}
+.m3{background:linear-gradient(135deg,#001a10,#005c3b);background-image:url('https://media.giphy.com/media/l4EpbyFTmfogjyA3m/giphy.gif');background-size:cover;background-position:center;}
+.m4{background:linear-gradient(135deg,#00101a,#003d5c);background-image:url('https://media.giphy.com/media/3o72F6A3rtzW6p4joQ/giphy.gif');background-size:cover;background-position:center;}
+.m5{background:linear-gradient(135deg,#1a1000,#5c4500);background-image:url('https://causewayfilms.com.au/media/pages/films/of-an-age/e0880f4246-1658816717/16a3865-1920x1080-crop-81-58.jpg');background-size:cover;background-position:center;}
+.m6{background:linear-gradient(135deg,#0a1500,#2d5c00);background-image:url('https://media.giphy.com/media/3o6fIUVP0DJ7MYVb6E/giphy.gif');background-size:cover;background-position:center;}
+.media-banner::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.52);}
+.media-body{padding:1.1rem;flex:1;display:flex;flex-direction:column;gap:.45rem;}
+.media-sub{font-size:.68rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
+.media-body h3{font-family:var(--font-display);font-size:1.1rem;font-weight:400;line-height:1.2;}
+.media-why{font-size:.8rem;color:var(--muted);line-height:1.6;flex:1;}
+.media-tags{display:flex;flex-wrap:wrap;gap:.38rem;margin-top:.45rem;}
+.mtag{font-size:.66rem;padding:.18rem .55rem;border-radius:999px;border:1px solid rgba(255,255,255,.1);color:var(--muted);}
+
+/* ══ MUSIC ══ */
+.music-sec{background:var(--mid);}
+.a1{background:linear-gradient(135deg,#1a0010,#5c002a);background-image:url('https://media.giphy.com/media/r0o46oy9obYLC/giphy.gif');background-size:cover;background-position:center;}
+.a2{background:linear-gradient(135deg,#0d001a,#3d0066);background-image:url('https://media.giphy.com/media/Q0CL9ooVe5dKg/giphy.gif');background-size:cover;background-position:center;}
+.a3{background:linear-gradient(135deg,#0a0f00,#2a3d00);background-image:url('https://media.giphy.com/media/Bpq9AhnKhxYm3tex16/giphy.gif');background-size:cover;background-position:center;}
+.a4{background:linear-gradient(135deg,#00080f,#00253d);background-image:url('https://media.giphy.com/media/25NTEcjA8XxPW/giphy.gif');background-size:cover;background-position:center;}
+.a5{background:linear-gradient(135deg,#0f0020,#3d0066);background-image:url('https://media.giphy.com/media/wtU2g7aiYE6I0/giphy.gif');background-size:cover;background-position:center;}
+.vinyl{position:absolute;right:-.5rem;top:50%;transform:translateY(-50%);width:64px;height:64px;border-radius:50%;opacity:.18;border:10px solid rgba(255,255,255,.3);border-top-color:rgba(255,255,255,.6);}
+
+/* ══ FOOTER ══ */
+footer{text-align:center;padding:2.8rem 2rem;border-top:1px solid rgba(255,255,255,.05);}
+footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.1rem;}
+.social-row{display:flex;justify-content:center;gap:.7rem;flex-wrap:wrap;}
+.social-btn{padding:.4rem 1rem;border-radius:999px;border:1px solid rgba(255,255,255,.12);font-size:.76rem;color:var(--muted);transition:.2s;}
+.social-btn:hover{background:rgba(255,255,255,.06);color:var(--text);}
+.heart{color:var(--c1);}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <video autoplay loop muted playsinline>
+    <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4" type="video/mp4"/>
+  </video>
+  <nav class="cinema-nav">
+    <div class="cinema-logo">Hieu<sup>®</sup></div>
+    <div class="cinema-nav-links">
+      <a href="#hero" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#movies">Films</a>
+      <a href="#music">Music</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="liquid-glass cinema-cta-nav">Say hello</button>
+  </nav>
+  <div class="cinema-hero-body">
+    <h1 class="animate-fade-rise">Student. Creator.<br/><em>Storyteller.</em></h1>
+    <p class="cinema-sub animate-fade-rise-delay">Nguyen Ba Hieu — 18 y/o IB student at Saigon University, HCMC. I write comics, build weird things, and live life on my own terms.</p>
+    <button class="liquid-glass cinema-cta-hero animate-fade-rise-delay-2">Explore my world</button>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about" class="content-sec">
+  <div class="center">
+    <div class="sec-label">Who am I</div>
+    <div class="sec-title">A little about me</div>
+    <p class="sec-sub">Authentic, a little weird, always building something.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-card"><div class="ico">🎓</div><h3>IB Freshman, Saigon University</h3><p>Studying International Business in HCMC. Learning how the world does business — and why culture is everything.</p></div>
+    <div class="about-card"><div class="ico">✏️</div><h3>Comic Writer & World-Builder</h3><p>Full lore, deep characters, planned multiverses. The stories don't stop.</p></div>
+    <div class="about-card"><div class="ico">🌐</div><h3>Wannabe Entrepreneur</h3><p>Testing business ideas while in school. Currently (slowly) building IDOMA HUB.</p></div>
+    <div class="about-card"><div class="ico">🎵</div><h3>Music + Movies + Vibes</h3><p>Big music person. Goated movie taste. Gym at 6 PM, café for everything else.</p></div>
+  </div>
+  <div class="lang-row center">
+    <span class="lang">🇻🇳 Vietnamese</span>
+    <span class="lang">🇺🇸 English</span>
+    <span class="lang">🇪🇸 Spanish (learning)</span>
+  </div>
+  <div class="pills center" style="margin-top:1.1rem;">
+    <span class="pill">🏋️ gym @ 6pm daily</span>
+    <span class="pill">☕ café worker bee</span>
+    <span class="pill">🎬 certified film nerd</span>
+    <span class="pill">🎵 music obsessed</span>
+    <span class="pill">✨ does weird stuff proudly</span>
+    <span class="pill">📖 lore enthusiast</span>
+  </div>
+</section>
+
+<!-- ══ PROJECTS ══ -->
+<section id="projects" class="content-sec projects-sec">
+  <div class="center">
+    <div class="sec-label">My work</div>
+    <div class="sec-title">Projects</div>
+    <p class="sec-sub">Comics, platforms, and a multiverse or two.</p>
+  </div>
+  <div class="projects-grid">
+    <div class="proj-card">
+      <div class="proj-thumb t1">📓<span class="sbadge done">✓ Completed</span></div>
+      <div class="proj-body">
+        <div class="proj-cat">Comic Book</div>
+        <h3>Sketchs</h3>
+        <p>My first completed comic book. It has pages, a cover, and a soul.</p>
+        <p class="proj-credit">Made with Nano Banana2</p>
+        <div class="proj-tags"><span class="ptag">Comic</span><span class="ptag">Original IP</span><span class="ptag">Completed</span></div>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-thumb t2">🌑<span class="sbadge ongoing">⚡ Ongoing</span></div>
+      <div class="proj-body">
+        <div class="proj-cat">Comic Book + Novel</div>
+        <h3>The Rust</h3>
+        <p>World built. Characters deep. Multiverse planned. Novel available. This is the big one.</p>
+        <p class="proj-credit">Made with Nano Banana2</p>
+        <div class="proj-tags"><span class="ptag">Comic</span><span class="ptag">Novel</span><span class="ptag">Multiverse</span></div>
+      </div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-thumb t3">🗣️<span class="sbadge lazy">😴 In progress</span></div>
+      <div class="proj-body">
+        <div class="proj-cat">Business / EdTech</div>
+        <h3>IDOMA HUB</h3>
+        <p>A language learning platform. Lazy progress, but the infographic commercials are real.</p>
+        <div class="proj-tags"><span class="ptag">EdTech</span><span class="ptag">Language</span><span class="ptag">Startup</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MOVIES ══ -->
+<section id="movies" class="content-sec movies-sec">
+  <div class="center">
+    <div class="sec-label">Hieu's watchlist</div>
+    <div class="sec-title">My Movies</div>
+    <p class="sec-sub">Films I love — and exactly why you should watch them too.</p>
+  </div>
+  <div class="media-grid">
+    <div class="media-card"><div class="media-banner m1"><div class="media-num">01</div><span class="media-year">1994</span></div><div class="media-body"><div class="media-sub">Wong Kar-wai</div><h3>Chungking Express</h3><p class="media-why">Two lonely cops, two missed connections, one city that pulses like a heartbeat. It makes you fall in love with sadness and neon lights simultaneously — pure café-at-midnight energy.</p><div class="media-tags"><span class="mtag">Mood film</span><span class="mtag">Urban poetry</span><span class="mtag">Loneliness</span></div></div></div>
+    <div class="media-card"><div class="media-banner m2"><div class="media-num">02</div><span class="media-year">2016</span></div><div class="media-body"><div class="media-sub">Damien Chazelle</div><h3>La La Land</h3><p class="media-why">For someone building a comic universe and a startup at 18 — this film about chasing dreams at the cost of comfort was made for you. Bittersweet and beautiful.</p><div class="media-tags"><span class="mtag">Dreams</span><span class="mtag">Music</span><span class="mtag">Bittersweet</span></div></div></div>
+    <div class="media-card"><div class="media-banner m3"><div class="media-num">03</div><span class="media-year">2017</span></div><div class="media-body"><div class="media-sub">Luca Guadagnino</div><h3>Call Me by Your Name</h3><p class="media-why">A golden, aching summer that rewires you completely. The authenticity you value bleeds out of every frame. The score alone will haunt you for weeks.</p><div class="media-tags"><span class="mtag">Authentic</span><span class="mtag">Sensory</span><span class="mtag">Coming of age</span></div></div></div>
+    <div class="media-card"><div class="media-banner m4"><div class="media-num">04</div><span class="media-year">1997</span></div><div class="media-body"><div class="media-sub">Wong Kar-wai</div><h3>Happy Together</h3><p class="media-why">Two people pulling apart in Buenos Aires. Beautifully shot, emotionally devastating. If Chungking Express hit you, this one will wreck you — in the best way.</p><div class="media-tags"><span class="mtag">Heartbreak</span><span class="mtag">Identity</span><span class="mtag">Visual poetry</span></div></div></div>
+    <div class="media-card"><div class="media-banner m5"><div class="media-num">05</div><span class="media-year">2023</span></div><div class="media-body"><div class="media-sub">Goran Stolevski</div><h3>Of an Age</h3><p class="media-why">One afternoon, one car ride, a conversation that changes everything. Raw and precisely 18 years old. You'll watch this and feel seen in a way that's almost uncomfortable.</p><div class="media-tags"><span class="mtag">Intimacy</span><span class="mtag">Youth</span><span class="mtag">One day</span></div></div></div>
+    <div class="media-card"><div class="media-banner m6"><div class="media-num">06</div><span class="media-year">2017</span></div><div class="media-body"><div class="media-sub">Francis Lee</div><h3>God's Own Country</h3><p class="media-why">Rough, quiet, and deeply human. No drama for drama's sake — just two people being real with each other. Authenticity in its purest, most unpolished form.</p><div class="media-tags"><span class="mtag">Raw</span><span class="mtag">Quiet intensity</span><span class="mtag">Human</span></div></div></div>
+  </div>
+</section>
+
+<!-- ══ MUSIC ══ -->
+<section id="music" class="content-sec music-sec">
+  <div class="center">
+    <div class="sec-label">Hieu's playlist</div>
+    <div class="sec-title">My Artists</div>
+    <p class="sec-sub">The artists living rent-free in my head — and why they should live in yours too.</p>
+  </div>
+  <div class="media-grid">
+
+    <div class="media-card">
+      <div class="media-banner a1">
+        <div class="media-num">01</div>
+        <div class="vinyl"></div>
+        <span class="media-year">Since 2010</span>
+      </div>
+      <div class="media-body">
+        <div class="media-sub">Dream pop · Baroque pop · Sad girl cinema</div>
+        <h3>Lana Del Rey</h3>
+        <p class="media-why">She writes like someone who makes movies in their head — melancholic, cinematic, American mythology filtered through sadness and beauty. If you love Wong Kar-wai films, you already love Lana. Same melancholy, different medium.</p>
+        <div class="media-tags"><span class="mtag">Cinematic</span><span class="mtag">Nostalgic</span><span class="mtag">Poetic</span></div>
+      </div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-banner a2">
+        <div class="media-num">02</div>
+        <div class="vinyl"></div>
+        <span class="media-year">Since 2004</span>
+      </div>
+      <div class="media-body">
+        <div class="media-sub">Pop punk · Alternative rock · Anthemic</div>
+        <h3>Paramore</h3>
+        <p class="media-why">Pure energy and emotional honesty — they've reinvented themselves multiple times without losing their core. The kind of band that hits differently depending on where you are in life. Perfect for gym at 6 PM.</p>
+        <div class="media-tags"><span class="mtag">High energy</span><span class="mtag">Emotional</span><span class="mtag">Anthemic</span></div>
+      </div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-banner a3">
+        <div class="media-num">03</div>
+        <div class="vinyl"></div>
+        <span class="media-year">Since 2018</span>
+      </div>
+      <div class="media-body">
+        <div class="media-sub">Post-rock · Avant-garde · Maximalist</div>
+        <h3>Black Country, New Road</h3>
+        <p class="media-why">Chaotic, literary, and completely unlike anything else. Their songs feel like reading a great novel — dense with meaning, always changing. The "weird stuff" taste you have? This is it in music form.</p>
+        <div class="media-tags"><span class="mtag">Avant-garde</span><span class="mtag">Literary</span><span class="mtag">Complex</span></div>
+      </div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-banner a4">
+        <div class="media-num">04</div>
+        <div class="vinyl"></div>
+        <span class="media-year">Since 2002</span>
+      </div>
+      <div class="media-body">
+        <div class="media-sub">Indie rock · Psych rock · Dry wit</div>
+        <h3>Arctic Monkeys</h3>
+        <p class="media-why">Alex Turner writes lyrics like a novelist — sharp, witty, loaded with imagery. Every album is a different world. A band that rewards you for paying attention, which you clearly do. Start with <em>Humbug</em> if you haven't.</p>
+        <div class="media-tags"><span class="mtag">Storytelling</span><span class="mtag">Sharp lyrics</span><span class="mtag">World-building</span></div>
+      </div>
+    </div>
+
+    <div class="media-card">
+      <div class="media-banner a5">
+        <div class="media-num">05</div>
+        <div class="vinyl"></div>
+        <span class="media-year">Since 2010</span>
+      </div>
+      <div class="media-body">
+        <div class="media-sub">Art pop · Futurist · Otherworldly</div>
+        <h3>Grimes</h3>
+        <p class="media-why">She builds entirely new sonic universes from scratch — exactly like you build comic universes. Weird, beautiful, futuristic, and completely uncompromising. Authentic in the most alien way possible. You respect that.</p>
+        <div class="media-tags"><span class="mtag">Universe-builder</span><span class="mtag">Futurist</span><span class="mtag">Uncompromising</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer id="contact">
+  <p>Made with <span class="heart">♥</span> somewhere between a lecture and the gym · Let's connect, Hieu.</p>
+  <div class="social-row">
+    <a class="social-btn" href="#">Instagram</a>
+    <a class="social-btn" href="#">TikTok</a>
+    <a class="social-btn" href="#">Facebook</a>
+    <a class="social-btn" href="#">Email</a>
+  </div>
+</footer>
+
+</body>
+</html>
