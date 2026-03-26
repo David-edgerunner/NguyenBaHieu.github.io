@@ -43,6 +43,8 @@ a{color:inherit;text-decoration:none;}
 .cinema-nav-links{display:none;}
 @media(min-width:768px){.cinema-nav-links{display:flex;gap:1.8rem;font-size:.82rem;color:hsl(var(--muted-foreground));}.cinema-nav-links a{transition:color .2s;}.cinema-nav-links a:hover,.cinema-nav-links a.active{color:#fff;}}
 .cinema-cta-nav{border-radius:999px;padding:.5rem 1.3rem;font-size:.8rem;color:#fff;cursor:pointer;}
+.hint-text{margin-top:.45rem;font-size:.76rem;color:hsl(var(--muted-foreground));opacity:0;transition:opacity .2s;pointer-events:none;}
+.hint-text.show{opacity:1;}
 
 .cinema-hero-body{position:relative;z-index:10;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem 1.5rem 5rem;}
 .cinema-hero-body h1{font-family:var(--font-display);font-size:clamp(2.6rem,7.5vw,5.8rem);line-height:.95;letter-spacing:-2.46px;font-weight:400;color:#fff;max-width:1000px;}
@@ -148,12 +150,16 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.1rem;}
       <a href="#music">Music</a>
       <a href="#contact">Contact</a>
     </div>
-    <button class="liquid-glass cinema-cta-nav">Say hello</button>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;">
+      <button id="say-hello-btn" class="liquid-glass cinema-cta-nav">Say hello</button>
+      <span id="say-hello-hint" class="hint-text">hello! really glad you're here!</span>
+    </div>
   </nav>
   <div class="cinema-hero-body">
-    <h1 class="animate-fade-rise">Student. Creator.<br/><em>Storyteller.</em></h1>
-    <p class="cinema-sub animate-fade-rise-delay">Nguyen Ba Hieu — 18 y/o IB student at Saigon University, HCMC. I write comics, build weird things, and live life on my own terms.</p>
-    <button class="liquid-glass cinema-cta-hero animate-fade-rise-delay-2">Explore my world</button>
+    <h1 class="animate-fade-rise">Student. Creator</h1>
+    <p class="cinema-sub animate-fade-rise-delay">Nguyen Ba Hieu — or David -18 y/o International Business student at Saigon University, HCMC. I build weird things, and live life on my own terms.</p>
+    <button id="explore-btn" class="liquid-glass cinema-cta-hero animate-fade-rise-delay-2">Explore my world </button>
+    <span id="explore-hint" class="hint-text">scroll down!</span>
   </div>
 </section>
 
@@ -165,10 +171,9 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.1rem;}
     <p class="sec-sub">Authentic, a little weird, always building something.</p>
   </div>
   <div class="about-grid">
-    <div class="about-card"><div class="ico">🎓</div><h3>IB Freshman, Saigon University</h3><p>Studying International Business in HCMC. Learning how the world does business — and why culture is everything.</p></div>
-    <div class="about-card"><div class="ico">✏️</div><h3>Comic Writer & World-Builder</h3><p>Full lore, deep characters, planned multiverses. The stories don't stop.</p></div>
-    <div class="about-card"><div class="ico">🌐</div><h3>Wannabe Entrepreneur</h3><p>Testing business ideas while in school. Currently (slowly) building IDOMA HUB.</p></div>
-    <div class="about-card"><div class="ico">🎵</div><h3>Music + Movies + Vibes</h3><p>Big music person. Goated movie taste. Gym at 6 PM, café for everything else.</p></div>
+    <div class="about-card"><div class="ico">🎓</div><h3>IB Freshman, Saigon University</h3><p>Studying International Business in HCMC, class DKQ1252. Learning how the world does business — and why culture is everything.</p></div>
+    <div class="about-card"><div class="ico">🌐</div><h3>Wannabe Entrepreneur</h3><p>Testing business ideas while in school. Currently (slowly) building IDOMA HUB (not an actual business though)( and I'm testing something else).</p></div>
+    <div class="about-card"><div class="ico">🎵</div><h3>Music + Movies + Vibes</h3><p>Big music person. Goated movie taste. Gym at 6 PM, café for everything else. Introverted (I'm trying not to be).</p></div>
   </div>
   <div class="lang-row center">
     <span class="lang">🇻🇳 Vietnamese</span>
@@ -208,7 +213,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.1rem;}
       <div class="proj-body">
         <div class="proj-cat">Comic Book + Novel</div>
         <h3>The Rust</h3>
-        <p>World built. Characters deep. Multiverse planned. Novel available. This is the big one.</p>
+        <p>World built. Characters deep. Multiverse planned. This is the big one.</p>
         <p class="proj-credit">Made with Nano Banana2</p>
         <div class="proj-tags"><span class="ptag">Comic</span><span class="ptag">Novel</span><span class="ptag">Multiverse</span></div>
       </div>
@@ -218,7 +223,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.1rem;}
       <div class="proj-body">
         <div class="proj-cat">Business / EdTech</div>
         <h3>IDOMA HUB</h3>
-        <p>A language learning platform. Lazy progress, but the infographic commercials are real.</p>
+        <p>A language learning platform. Lazy progress, but the infographic commercials are real. expect the whole idea was fake.</p>
         <div class="proj-tags"><span class="ptag">EdTech</span><span class="ptag">Language</span><span class="ptag">Startup</span></div>
       </div>
     </div>
@@ -233,12 +238,12 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.1rem;}
     <p class="sec-sub">Films I love — and exactly why you should watch them too.</p>
   </div>
   <div class="media-grid">
-    <div class="media-card"><div class="media-banner m1"><div class="media-num">01</div><span class="media-year">1994</span></div><div class="media-body"><div class="media-sub">Wong Kar-wai</div><h3>Chungking Express</h3><p class="media-why">Two lonely cops, two missed connections, one city that pulses like a heartbeat. It makes you fall in love with sadness and neon lights simultaneously — pure café-at-midnight energy.</p><div class="media-tags"><span class="mtag">Mood film</span><span class="mtag">Urban poetry</span><span class="mtag">Loneliness</span></div></div></div>
-    <div class="media-card"><div class="media-banner m2"><div class="media-num">02</div><span class="media-year">2016</span></div><div class="media-body"><div class="media-sub">Damien Chazelle</div><h3>La La Land</h3><p class="media-why">For someone building a comic universe and a startup at 18 — this film about chasing dreams at the cost of comfort was made for you. Bittersweet and beautiful.</p><div class="media-tags"><span class="mtag">Dreams</span><span class="mtag">Music</span><span class="mtag">Bittersweet</span></div></div></div>
+    <div class="media-card"><div class="media-banner m1"><div class="media-num">01</div><span class="media-year">1994</span></div><div class="media-body"><div class="media-sub">Wong Kar-wai</div><h3>Chungking Express</h3><p class="media-why">Two lonely cops, two missed connections, one city that pulses like a heartbeat. It makes you fall in love with sadness and neon lights simultaneously — pure 1990s Hong Kong vibe.I watched it for the first time while drunk.</p><div class="media-tags"><span class="mtag">Mood film</span><span class="mtag">Urban poetry</span><span class="mtag">Loneliness</span></div></div></div>
+    <div class="media-card"><div class="media-banner m2"><div class="media-num">02</div><span class="media-year">2016</span></div><div class="media-body"><div class="media-sub">Damien Chazelle</div><h3>La La Land</h3><p class="media-why">For someone have a lot of dreams — this film about chasing it at the cost of comfort was made for you. Bittersweet and beautiful.I remember every quote except I'm not.</p><div class="media-tags"><span class="mtag">Dreams</span><span class="mtag">Music</span><span class="mtag">Bittersweet</span></div></div></div>
     <div class="media-card"><div class="media-banner m3"><div class="media-num">03</div><span class="media-year">2017</span></div><div class="media-body"><div class="media-sub">Luca Guadagnino</div><h3>Call Me by Your Name</h3><p class="media-why">A golden, aching summer that rewires you completely. The authenticity you value bleeds out of every frame. The score alone will haunt you for weeks.</p><div class="media-tags"><span class="mtag">Authentic</span><span class="mtag">Sensory</span><span class="mtag">Coming of age</span></div></div></div>
     <div class="media-card"><div class="media-banner m4"><div class="media-num">04</div><span class="media-year">1997</span></div><div class="media-body"><div class="media-sub">Wong Kar-wai</div><h3>Happy Together</h3><p class="media-why">Two people pulling apart in Buenos Aires. Beautifully shot, emotionally devastating. If Chungking Express hit you, this one will wreck you — in the best way.</p><div class="media-tags"><span class="mtag">Heartbreak</span><span class="mtag">Identity</span><span class="mtag">Visual poetry</span></div></div></div>
-    <div class="media-card"><div class="media-banner m5"><div class="media-num">05</div><span class="media-year">2023</span></div><div class="media-body"><div class="media-sub">Goran Stolevski</div><h3>Of an Age</h3><p class="media-why">One afternoon, one car ride, a conversation that changes everything. Raw and precisely 18 years old. You'll watch this and feel seen in a way that's almost uncomfortable.</p><div class="media-tags"><span class="mtag">Intimacy</span><span class="mtag">Youth</span><span class="mtag">One day</span></div></div></div>
-    <div class="media-card"><div class="media-banner m6"><div class="media-num">06</div><span class="media-year">2017</span></div><div class="media-body"><div class="media-sub">Francis Lee</div><h3>God's Own Country</h3><p class="media-why">Rough, quiet, and deeply human. No drama for drama's sake — just two people being real with each other. Authenticity in its purest, most unpolished form.</p><div class="media-tags"><span class="mtag">Raw</span><span class="mtag">Quiet intensity</span><span class="mtag">Human</span></div></div></div>
+    <div class="media-card"><div class="media-banner m5"><div class="media-num">05</div><span class="media-year">2023</span></div><div class="media-body"><div class="media-sub">Goran Stolevski</div><h3>Of an Age</h3><p class="media-why">One afternoon, one car ride, a conversation that changes everything. Raw and precisely 18 years old. You'll watch this and feel seen in a way that's almost uncomfortable. Best to watch if you watched Happy together, trust me.</p><div class="media-tags"><span class="mtag">Intimacy</span><span class="mtag">Youth</span><span class="mtag">One day</span></div></div></div>
+    <div class="media-card"><div class="media-banner m6"><div class="media-num">06</div><span class="media-year">2017</span></div><div class="media-body"><div class="media-sub">Francis Lee</div><h3>God's Own Country</h3><p class="media-why">Rough, quiet, and deeply human. No drama for drama's sake — just two people being real with each other. Authenticity in its purest, most unpolished form. So relatable if you're also a country boy.</p><div class="media-tags"><span class="mtag">Raw</span><span class="mtag">Quiet intensity</span><span class="mtag">Human</span></div></div></div>
   </div>
 </section>
 
@@ -260,7 +265,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.1rem;}
       <div class="media-body">
         <div class="media-sub">Dream pop · Baroque pop · Sad girl cinema</div>
         <h3>Lana Del Rey</h3>
-        <p class="media-why">She writes like someone who makes movies in their head — melancholic, cinematic, American mythology filtered through sadness and beauty. If you love Wong Kar-wai films, you already love Lana. Same melancholy, different medium.</p>
+        <p class="media-why">She writes like someone who makes movies in their head — melancholic, cinematic, American mythology filtered through sadness and beauty. If you love Wong Kar-wai films, you already love Lana. Same melancholy, different medium. Funfact:i can sing all her song! </p>
         <div class="media-tags"><span class="mtag">Cinematic</span><span class="mtag">Nostalgic</span><span class="mtag">Poetic</span></div>
       </div>
     </div>
@@ -288,7 +293,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.1rem;}
       <div class="media-body">
         <div class="media-sub">Post-rock · Avant-garde · Maximalist</div>
         <h3>Black Country, New Road</h3>
-        <p class="media-why">Chaotic, literary, and completely unlike anything else. Their songs feel like reading a great novel — dense with meaning, always changing. The "weird stuff" taste you have? This is it in music form.</p>
+        <p class="media-why">Chaotic, literary, and completely unlike anything else. Their songs feel like reading a great novel — dense with meaning, always changing. The "weird stuff" taste you have? This is it in music form. I like Basketball shoes the most!.</p>
         <div class="media-tags"><span class="mtag">Avant-garde</span><span class="mtag">Literary</span><span class="mtag">Complex</span></div>
       </div>
     </div>
@@ -302,7 +307,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.1rem;}
       <div class="media-body">
         <div class="media-sub">Indie rock · Psych rock · Dry wit</div>
         <h3>Arctic Monkeys</h3>
-        <p class="media-why">Alex Turner writes lyrics like a novelist — sharp, witty, loaded with imagery. Every album is a different world. A band that rewards you for paying attention, which you clearly do. Start with <em>Humbug</em> if you haven't.</p>
+        <p class="media-why">Alex Turner writes lyrics like a novelist — sharp, witty, loaded with imagery. Every album is a different world. A band that rewards you for paying attention, which you clearly do. And he's very hot too! Start with <em>Humbug</em> if you haven't.</p>
         <div class="media-tags"><span class="mtag">Storytelling</span><span class="mtag">Sharp lyrics</span><span class="mtag">World-building</span></div>
       </div>
     </div>
@@ -316,7 +321,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.1rem;}
       <div class="media-body">
         <div class="media-sub">Art pop · Futurist · Otherworldly</div>
         <h3>Grimes</h3>
-        <p class="media-why">She builds entirely new sonic universes from scratch — exactly like you build comic universes. Weird, beautiful, futuristic, and completely uncompromising. Authentic in the most alien way possible. You respect that.</p>
+        <p class="media-why">She builds entirely new sonic universes from scratch. Weird, beautiful, futuristic, and completely uncompromising. Authentic in the most alien way possible. You respect that.</p>
         <div class="media-tags"><span class="mtag">Universe-builder</span><span class="mtag">Futurist</span><span class="mtag">Uncompromising</span></div>
       </div>
     </div>
@@ -328,12 +333,34 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.1rem;}
 <footer id="contact">
   <p>Made with <span class="heart">♥</span> somewhere between a lecture and the gym · Let's connect, Hieu.</p>
   <div class="social-row">
-    <a class="social-btn" href="#">Instagram</a>
-    <a class="social-btn" href="#">TikTok</a>
-    <a class="social-btn" href="#">Facebook</a>
-    <a class="social-btn" href="#">Email</a>
+    <a class="social-btn" href="#">Not gr*ndr</a>
   </div>
 </footer>
+
+<script>
+  const sayHelloBtn = document.getElementById('say-hello-btn');
+  const sayHelloHint = document.getElementById('say-hello-hint');
+  const exploreBtn = document.getElementById('explore-btn');
+  const exploreHint = document.getElementById('explore-hint');
+
+  const timers = {};
+
+  function showHint(hintElement, duration, timerRefName) {
+    hintElement.classList.add('show');
+    clearTimeout(timers[timerRefName]);
+    timers[timerRefName] = setTimeout(() => {
+      hintElement.classList.remove('show');
+    }, duration);
+  }
+
+  sayHelloBtn.addEventListener('click', () => {
+    showHint(sayHelloHint, 3000, 'sayHelloTimer');
+  });
+
+  exploreBtn.addEventListener('click', () => {
+    showHint(exploreHint, 2000, 'exploreTimer');
+  });
+</script>
 
 </body>
 </html>
