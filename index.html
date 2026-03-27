@@ -258,9 +258,128 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
 .media-card.glass::before{z-index:0;}
 .media-banner{z-index:1;}
 .media-body{z-index:1;position:relative;}
+
+/* ══ SPLASH SCREEN ══ */
+#splash{
+  position:fixed;inset:0;z-index:999999;
+  background:#0D0A07;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:opacity .8s ease, visibility .8s ease;
+}
+#splash.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+
+/* Ambient film grain on splash */
+#splash::before{
+  content:'';position:absolute;inset:0;
+  opacity:.06;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:200px;pointer-events:none;
+}
+
+/* Soft radial glow behind the button */
+#splash::after{
+  content:'';position:absolute;
+  width:420px;height:420px;
+  background:radial-gradient(circle, rgba(232,164,74,0.08) 0%, transparent 70%);
+  border-radius:50%;
+  animation:splashPulse 3s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes splashPulse{
+  0%,100%{transform:scale(1);opacity:.6;}
+  50%{transform:scale(1.15);opacity:1;}
+}
+
+.splash-logo{
+  font-family:var(--font-display);
+  font-size:clamp(2.8rem,8vw,5rem);
+  color:var(--text);
+  letter-spacing:-.03em;
+  margin-bottom:.25rem;
+  position:relative;z-index:2;
+  animation:fade-rise .9s var(--ease-out) both;
+}
+.splash-logo sup{font-size:.5em;vertical-align:super;color:var(--gold);}
+
+.splash-tagline{
+  font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:3.5rem;
+  position:relative;z-index:2;
+  animation:fade-rise .9s var(--ease-out) .15s both;
+}
+
+.splash-btn{
+  position:relative;z-index:2;
+  border:1px solid rgba(232,164,74,0.35);
+  border-radius:999px;
+  padding:.95rem 3rem;
+  font-family:var(--font-body);
+  font-size:.85rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--text);
+  background:rgba(232,164,74,0.06);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  cursor:pointer;
+  transition:transform .25s var(--ease-out), background .2s, border-color .2s, box-shadow .2s;
+  animation:fade-rise .9s var(--ease-out) .3s both;
+  -webkit-tap-highlight-color:transparent;
+}
+.splash-btn:hover,.splash-btn:active{
+  transform:scale(1.05);
+  background:rgba(232,164,74,0.13);
+  border-color:rgba(232,164,74,0.6);
+  box-shadow:0 0 32px rgba(232,164,74,0.12);
+}
+
+/* Thin horizontal film bars at top + bottom */
+.splash-film-top,.splash-film-bottom{
+  position:absolute;left:0;right:0;height:6px;
+  background:rgba(232,164,74,0.08);
+  display:flex;gap:3px;padding:0 1rem;
+  align-items:center;overflow:hidden;
+}
+.splash-film-top{top:0;}
+.splash-film-bottom{bottom:0;}
+.splash-film-top span,.splash-film-bottom span{
+  display:block;flex-shrink:0;
+  width:20px;height:4px;border-radius:2px;
+  background:rgba(232,164,74,0.18);
+}
+
+.splash-hint{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(154,142,126,0.5);
+  animation:splashBlink 2.5s ease-in-out infinite .8s both;
+  z-index:2;white-space:nowrap;
+}
+@keyframes splashBlink{0%,100%{opacity:.3;}50%{opacity:.9;}}
 </style>
 </head>
 <body>
+
+<!-- ══ SPLASH / ENTRY SCREEN ══ -->
+<div id="splash" role="button" aria-label="Enter site" tabindex="0">
+  <div class="splash-film-top">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <p class="splash-logo">Hieu<sup>®</sup></p>
+  <p class="splash-tagline">Saigon · 2026</p>
+  <button class="splash-btn" id="splash-enter-btn">Explore my world</button>
+  <p class="splash-hint">tap anywhere to enter</p>
+  <div class="splash-film-bottom">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+</div>
 
 <div id="cur-dot"></div>
 <div id="cur-ring"></div>
@@ -610,12 +729,9 @@ document.getElementById('lang-toggle-btn').addEventListener('click', () => {
 const isMobile = window.matchMedia('(max-width:767px)').matches;
 
 function loadAndPlay(video) {
-  if (video.dataset.loaded) { video.play(); return; }
+  if (video.dataset.loaded) { video.play().catch(()=>{}); return; }
   video.dataset.loaded = '1';
   const sourceEl = video.querySelector('source');
-  // support both patterns:
-  // 1) <video data-src="...">
-  // 2) <video><source data-src="..."></video>
   const src = video.dataset.srcSd || video.dataset.src || (sourceEl ? (sourceEl.dataset.srcSd || sourceEl.dataset.src) : '');
   if (!src) return;
   if (video.tagName === 'VIDEO' && sourceEl) {
@@ -631,20 +747,80 @@ function loadAndPlay(video) {
   }, {once:true});
 }
 
-// Hero — load immediately on desktop, skip on mobile
+// ── SPLASH SCREEN LOGIC ──
+const splash = document.getElementById('splash');
+let siteUnlocked = false;
+
+function dismissSplash() {
+  if (siteUnlocked) return;
+  siteUnlocked = true;
+
+  // 1. Hide splash with fade
+  splash.classList.add('hidden');
+
+  // 2. On mobile: now that user has interacted, enable video visibility
+  if (isMobile) {
+    // Remove the CSS rule that hides .sec-video on mobile
+    const mobileStyle = document.createElement('style');
+    mobileStyle.textContent = `
+      @media(max-width:767px){
+        .sec-video { display:block !important; }
+        section.content-sec { background: var(--warm-dark); }
+      }
+    `;
+    document.head.appendChild(mobileStyle);
+
+    // Load & play hero video
+    const heroVideo = document.getElementById('hero-video');
+    heroVideo.style.display = '';
+    loadAndPlay(heroVideo);
+
+    // Set up intersection observer for section videos
+    const secVideos = document.querySelectorAll('.sec-video[data-src]');
+    const playObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const v = entry.target;
+        if (entry.isIntersecting) {
+          loadAndPlay(v);
+        } else {
+          if (!v.paused) v.pause();
+        }
+      });
+    }, { rootMargin: '300px 0px', threshold: 0 });
+    secVideos.forEach(v => {
+      v.setAttribute('preload', 'none');
+      playObserver.observe(v);
+    });
+  }
+
+  // 3. Remove splash from DOM after transition ends
+  splash.addEventListener('transitionend', () => splash.remove(), {once:true});
+}
+
+// Tap/click anywhere on splash to enter
+splash.addEventListener('click', dismissSplash);
+splash.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' ') dismissSplash(); });
+document.getElementById('splash-enter-btn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  dismissSplash();
+});
+
+// Desktop: also dismiss on first scroll (nice UX)
+if (!isMobile) {
+  window.addEventListener('wheel', dismissSplash, {once: true, passive: true});
+}
+
+// Hero — load immediately on DESKTOP only (mobile waits for splash tap)
 const heroVideo = document.getElementById('hero-video');
 if (!isMobile) {
   loadAndPlay(heroVideo);
 } else {
-  // mobile: just show a warm dark bg, no video
-  heroVideo.style.display = 'none';
+  heroVideo.style.display = 'none'; // hidden until splash dismissed
 }
 
-// Section videos — load only when 300px from viewport
-// pause immediately when leaving viewport (saves bandwidth + CPU)
+// Section videos — desktop only (mobile handled inside dismissSplash)
 if (!isMobile) {
   const secVideos = document.querySelectorAll('.sec-video[data-src]');
-
   const playObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const v = entry.target;
@@ -655,7 +831,6 @@ if (!isMobile) {
       }
     });
   }, { rootMargin: '300px 0px', threshold: 0 });
-
   secVideos.forEach(v => {
     v.setAttribute('preload', 'none');
     playObserver.observe(v);
@@ -875,6 +1050,7 @@ loadFeed();
   }
 
   // Start on first interaction anywhere on the page
+  // (splash tap on mobile will also call startMusic via this listener)
   ['click','touchstart','keydown'].forEach(evt =>
     document.addEventListener(evt, startMusic, {once: true})
   );
@@ -885,7 +1061,19 @@ loadFeed();
 
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (!started) { startMusic(); return; }
+
+    // If blocked or paused, force play on explicit button tap
+    if (audio.paused) {
+      audio.play().then(() => {
+        started = true;
+        muted = false;
+        fadeTo(0.28, 800);
+        btn.classList.remove('muted');
+        btn.title = 'Mute music';
+      }).catch(err => console.error("Audio block persists:", err));
+      return;
+    }
+
     muted = !muted;
     if (muted) {
       fadeTo(0, 800);
