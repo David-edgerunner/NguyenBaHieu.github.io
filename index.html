@@ -288,7 +288,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
 <!-- ══ HERO ══ -->
 <section id="hero">
   <video id="hero-video" loop muted playsinline poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
-    <source data-src="https://www.pexels.com/download/video/36086837/" type="video/mp4"/>
+    <source data-src="./videos/hero.mp4" type="video/mp4"/>
   </video>
   <div class="hero-grain"></div>
   <div class="cinema-hero-body">
@@ -303,7 +303,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
 
 <!-- ══ ABOUT ══ -->
 <section id="about" class="content-sec">
-  <video class="sec-video parallax-bg" data-src="https://www.pexels.com/download/video/33890318/" loop muted playsinline></video>
+  <video class="sec-video parallax-bg" data-src="./videos/about.mp4" data-src-sd="" preload="none" loop muted playsinline></video>
   <div class="sec-overlay" style="background:linear-gradient(to right,rgba(26,20,16,0.88) 0%,rgba(26,20,16,0.6) 60%,rgba(26,20,16,0.35) 100%);"></div>
   <div class="sec-inner">
     <div class="sec-label fade-in" data-i18n="about.label">Who am I</div>
@@ -332,7 +332,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
 
 <!-- ══ PROJECTS ══ -->
 <section id="projects" class="content-sec">
-  <video class="sec-video" data-src="https://www.pexels.com/download/video/9843199/" loop muted playsinline></video>
+  <video class="sec-video" data-src="./videos/projects.mp4" data-src-sd="" preload="none" loop muted playsinline></video>
   <div class="sec-overlay" style="background:linear-gradient(to bottom,rgba(18,14,10,0.75) 0%,rgba(26,20,16,0.6) 50%,rgba(18,14,10,0.8) 100%);"></div>
   <div class="sec-inner">
     <div class="sec-label fade-in center" data-i18n="projects.label">My work</div>
@@ -377,7 +377,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
 
 <!-- ══ FEED ══ -->
 <section id="feed" class="content-sec">
-  <video class="sec-video" data-src="https://www.pexels.com/download/video/27440765/" loop muted playsinline></video>
+  <video class="sec-video" data-src="./videos/feed.mp4" data-src-sd="" preload="none" loop muted playsinline></video>
   <div class="sec-overlay" style="background:linear-gradient(to right,rgba(18,14,10,0.85) 0%,rgba(26,20,16,0.55) 100%);"></div>
   <div class="sec-inner">
     <div class="sec-label fade-in" data-i18n="feed.label">What I'm up to</div>
@@ -405,7 +405,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
 
 <!-- ══ MOVIES ══ -->
 <section id="movies" class="content-sec">
-  <video class="sec-video" data-src="https://www.pexels.com/download/video/35674880/" loop muted playsinline></video>
+  <video class="sec-video" data-src="./videos/films.mp4" data-src-sd="" preload="none" loop muted playsinline></video>
   <div class="sec-overlay" style="background:linear-gradient(to bottom,rgba(18,14,10,0.72) 0%,rgba(18,14,10,0.45) 50%,rgba(18,14,10,0.75) 100%);"></div>
   <div class="sec-inner">
     <div class="sec-label fade-in center" data-i18n="movies.label">Hieu's watchlist</div>
@@ -424,7 +424,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
 
 <!-- ══ MUSIC ══ -->
 <section id="music" class="content-sec">
-  <video class="sec-video" data-src="https://www.pexels.com/download/video/3403532/" loop muted playsinline></video>
+  <video class="sec-video" data-src="./videos/music.mp4" data-src-sd="" preload="none" loop muted playsinline></video>
   <div class="sec-overlay" style="background:linear-gradient(160deg,rgba(26,20,16,0.82) 0%,rgba(18,14,10,0.55) 100%);"></div>
   <div class="sec-inner">
     <div class="sec-label fade-in center" data-i18n="music.label">Hieu's playlist</div>
@@ -599,42 +599,60 @@ document.getElementById('lang-toggle-btn').addEventListener('click', () => {
 })();
 
 // ══════════════════════════════════════
-// HERO VIDEO LAZY LOAD
 // ══════════════════════════════════════
-(function() {
-  const video = document.getElementById('hero-video');
-  const source = video.querySelector('source');
-  source.src = source.dataset.src;
-  video.load();
-  video.addEventListener('canplaythrough', function onReady() {
-    video.play();
-    setTimeout(() => video.classList.add('loaded'), 80);
-    video.removeEventListener('canplaythrough', onReady);
-  }, {once:true});
-})();
-
-// ══════════════════════════════════════
-// SECTION VIDEO LAZY LOAD
+// VIDEO SYSTEM — SMART LOADING
+// one video plays at a time, pause when offscreen,
+// load only when section is near viewport
 // ══════════════════════════════════════
 const isMobile = window.matchMedia('(max-width:767px)').matches;
+
+function loadAndPlay(video) {
+  if (video.dataset.loaded) { video.play(); return; }
+  video.dataset.loaded = '1';
+  // prefer data-src-sd (SD override) else fall back to data-src
+  const src = video.dataset.srcSd || video.dataset.src;
+  if (video.tagName === 'VIDEO' && video.querySelector('source')) {
+    video.querySelector('source').src = src;
+  } else {
+    video.src = src;
+  }
+  video.load();
+  video.addEventListener('canplay', function onReady() {
+    video.play().catch(()=>{});
+    setTimeout(() => video.classList.add('loaded'), 80);
+    video.removeEventListener('canplay', onReady);
+  }, {once:true});
+}
+
+// Hero — load immediately on desktop, skip on mobile
+const heroVideo = document.getElementById('hero-video');
+if (!isMobile) {
+  loadAndPlay(heroVideo);
+} else {
+  // mobile: just show a warm dark bg, no video
+  heroVideo.style.display = 'none';
+}
+
+// Section videos — load only when 300px from viewport
+// pause immediately when leaving viewport (saves bandwidth + CPU)
 if (!isMobile) {
   const secVideos = document.querySelectorAll('.sec-video[data-src]');
-  const vidObserver = new IntersectionObserver((entries) => {
+
+  const playObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
+      const v = entry.target;
       if (entry.isIntersecting) {
-        const v = entry.target;
-        v.src = v.dataset.src;
-        v.load();
-        v.addEventListener('canplaythrough', function onReady() {
-          v.play();
-          setTimeout(() => v.classList.add('loaded'), 100);
-          v.removeEventListener('canplaythrough', onReady);
-        }, {once:true});
-        vidObserver.unobserve(v);
+        loadAndPlay(v);
+      } else {
+        if (!v.paused) v.pause();
       }
     });
-  }, {rootMargin:'200px'});
-  secVideos.forEach(v => vidObserver.observe(v));
+  }, { rootMargin: '300px 0px', threshold: 0 });
+
+  secVideos.forEach(v => {
+    v.setAttribute('preload', 'none');
+    playObserver.observe(v);
+  });
 }
 
 // ══════════════════════════════════════
