@@ -6,7 +6,7 @@
 <title>Nguyen Ba Hieu</title>
 <meta name="description" content="Nguyen Ba Hieu — Saigon-based, self-taught in everything that matters, freshman in everything else."/>
 <meta property="og:title" content="Nguyen Ba Hieu"/>
-<meta property="og:description" content="Saigon-based, self-taught in everything that matters, freshman in everything else."/>
+<meta property="og:description" content="Saigon-based, self-taught in everything that matters, freshman in everything else.( this site looks more professional if u are using laptop, and less cringy in english cause i wrote it in english)"/>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -179,10 +179,10 @@ section.content-sec{padding:6rem 2rem;position:relative;overflow:hidden;min-heig
 .media-card:hover{transform:translateY(-6px);}
 .media-card:hover .media-banner-img{transform:scale(1.05);}
 .media-banner{height:130px;position:relative;overflow:hidden;}
-.media-banner-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease-out);z-index:0;}
-.media-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(18,14,10,.75));z-index:1;pointer-events:none;}
-.media-num{font-family:var(--font-display);font-size:3rem;font-weight:400;line-height:1;opacity:.13;position:absolute;right:.9rem;top:.3rem;color:#fff;z-index:3;}
-.media-year{font-size:.66rem;background:rgba(250,246,239,.1);border-radius:999px;padding:.18rem .58rem;color:rgba(250,246,239,.6);font-weight:500;position:absolute;bottom:.8rem;left:.9rem;z-index:3;backdrop-filter:blur(4px);}
+.media-banner-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease-out);}
+.media-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(18,14,10,.75));}
+.media-num{font-family:var(--font-display);font-size:3rem;font-weight:400;line-height:1;opacity:.13;position:absolute;right:.9rem;top:.3rem;color:#fff;z-index:2;}
+.media-year{font-size:.66rem;background:rgba(250,246,239,.1);border-radius:999px;padding:.18rem .58rem;color:rgba(250,246,239,.6);font-weight:500;position:absolute;bottom:.8rem;left:.9rem;z-index:2;backdrop-filter:blur(4px);}
 .media-body{padding:1.1rem;flex:1;display:flex;flex-direction:column;gap:.4rem;}
 .media-sub{font-size:.66rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
 .media-body h3{font-family:var(--font-display);font-size:1.05rem;font-weight:400;line-height:1.25;color:var(--text);}
@@ -192,12 +192,12 @@ section.content-sec{padding:6rem 2rem;position:relative;overflow:hidden;min-heig
 
 /* ══ MUSIC ══ */
 #music .sec-overlay{background:linear-gradient(160deg,rgba(26,20,16,0.8) 0%,rgba(18,14,10,0.5) 100%);}
-.vinyl{position:absolute;right:-.4rem;top:50%;transform:translateY(-50%);width:60px;height:60px;border-radius:50%;opacity:.2;border:9px solid rgba(255,255,255,.25);border-top-color:rgba(255,255,255,.55);z-index:3;}
-.a1{background:linear-gradient(135deg,#2A0818,#6A2040);background-image:url('https://media.giphy.com/media/r0o46oy9obYLC/giphy.gif');background-size:cover;background-position:center;}
-.a2{background:linear-gradient(135deg,#18082A,#4A1870);background-image:url('https://media.giphy.com/media/Q0CL9ooVe5dKg/giphy.gif');background-size:cover;background-position:center;}
-.a3{background:linear-gradient(135deg,#0A1208,#283A18);background-image:url('https://media.giphy.com/media/Bpq9AhnKhxYm3tex16/giphy.gif');background-size:cover;background-position:center;}
-.a4{background:linear-gradient(135deg,#080C18,#182848);background-image:url('https://media.giphy.com/media/25NTEcjA8XxPW/giphy.gif');background-size:cover;background-position:center;}
-.a5{background:linear-gradient(135deg,#180828,#4A1858);background-image:url('https://media.giphy.com/media/wtU2g7aiYE6I0/giphy.gif');background-size:cover;background-position:center;}
+.vinyl{position:absolute;right:-.4rem;top:50%;transform:translateY(-50%);width:60px;height:60px;border-radius:50%;opacity:.2;border:9px solid rgba(255,255,255,.25);border-top-color:rgba(255,255,255,.55);}
+.a1{background:linear-gradient(135deg,#2A0818,#6A2040);}
+.a2{background:linear-gradient(135deg,#18082A,#4A1870);}
+.a3{background:linear-gradient(135deg,#0A1208,#283A18);}
+.a4{background:linear-gradient(135deg,#080C18,#182848);}
+.a5{background:linear-gradient(135deg,#180828,#4A1858);}
 
 /* ══ NOW PLAYING ══ */
 #now-playing-wrap{display:flex;justify-content:center;margin-top:2.5rem;}
@@ -240,9 +240,9 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
 
 /* ══ MOBILE ══ */
 @media(max-width:767px){
-  section.content-sec{padding:5rem 1.2rem;min-height:auto;background:var(--warm-dark);}
+  section.content-sec{padding:5rem 1.2rem;min-height:auto;}
   .sec-video{display:none;}
-  .sec-overlay{background:rgba(18,14,10,0.0)!important;}
+  .sec-overlay{background:rgba(18,14,10,0.92)!important;}
   .cinema-nav{padding:1rem 1.2rem;}
   .cinema-hero-body{padding:7rem 1.2rem 4rem;}
   .cinema-hero-body h1{font-size:clamp(2.4rem,10vw,3.5rem);}
@@ -253,133 +253,9 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
   .feed-filter{flex-shrink:0;}
   #now-playing-widget{max-width:100%;}
 }
-/* glass must not clip card banner backgrounds */
-.media-card.glass{overflow:hidden;}
-.media-card.glass::before{z-index:0;}
-.media-banner{z-index:1;}
-.media-body{z-index:1;position:relative;}
-
-/* ══ SPLASH SCREEN ══ */
-#splash{
-  position:fixed;inset:0;z-index:999999;
-  background:#0D0A07;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  cursor:pointer;
-  transition:opacity .8s ease, visibility .8s ease;
-}
-#splash.hidden{opacity:0;visibility:hidden;pointer-events:none;}
-
-/* Ambient film grain on splash */
-#splash::before{
-  content:'';position:absolute;inset:0;
-  opacity:.06;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:200px;pointer-events:none;
-}
-
-/* Soft radial glow behind the button */
-#splash::after{
-  content:'';position:absolute;
-  width:420px;height:420px;
-  background:radial-gradient(circle, rgba(232,164,74,0.08) 0%, transparent 70%);
-  border-radius:50%;
-  animation:splashPulse 3s ease-in-out infinite;
-  pointer-events:none;
-}
-@keyframes splashPulse{
-  0%,100%{transform:scale(1);opacity:.6;}
-  50%{transform:scale(1.15);opacity:1;}
-}
-
-.splash-logo{
-  font-family:var(--font-display);
-  font-size:clamp(2.8rem,8vw,5rem);
-  color:var(--text);
-  letter-spacing:-.03em;
-  margin-bottom:.25rem;
-  position:relative;z-index:2;
-  animation:fade-rise .9s var(--ease-out) both;
-}
-.splash-logo sup{font-size:.5em;vertical-align:super;color:var(--gold);}
-
-.splash-tagline{
-  font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:3.5rem;
-  position:relative;z-index:2;
-  animation:fade-rise .9s var(--ease-out) .15s both;
-}
-
-.splash-btn{
-  position:relative;z-index:2;
-  border:1px solid rgba(232,164,74,0.35);
-  border-radius:999px;
-  padding:.95rem 3rem;
-  font-family:var(--font-body);
-  font-size:.85rem;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  color:var(--text);
-  background:rgba(232,164,74,0.06);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  cursor:pointer;
-  transition:transform .25s var(--ease-out), background .2s, border-color .2s, box-shadow .2s;
-  animation:fade-rise .9s var(--ease-out) .3s both;
-  -webkit-tap-highlight-color:transparent;
-}
-.splash-btn:hover,.splash-btn:active{
-  transform:scale(1.05);
-  background:rgba(232,164,74,0.13);
-  border-color:rgba(232,164,74,0.6);
-  box-shadow:0 0 32px rgba(232,164,74,0.12);
-}
-
-/* Thin horizontal film bars at top + bottom */
-.splash-film-top,.splash-film-bottom{
-  position:absolute;left:0;right:0;height:6px;
-  background:rgba(232,164,74,0.08);
-  display:flex;gap:3px;padding:0 1rem;
-  align-items:center;overflow:hidden;
-}
-.splash-film-top{top:0;}
-.splash-film-bottom{bottom:0;}
-.splash-film-top span,.splash-film-bottom span{
-  display:block;flex-shrink:0;
-  width:20px;height:4px;border-radius:2px;
-  background:rgba(232,164,74,0.18);
-}
-
-.splash-hint{
-  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
-  font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(154,142,126,0.5);
-  animation:splashBlink 2.5s ease-in-out infinite .8s both;
-  z-index:2;white-space:nowrap;
-}
-@keyframes splashBlink{0%,100%{opacity:.3;}50%{opacity:.9;}}
 </style>
 </head>
 <body>
-
-<!-- ══ SPLASH / ENTRY SCREEN ══ -->
-<div id="splash" role="button" aria-label="Enter site" tabindex="0">
-  <div class="splash-film-top">
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-  </div>
-  <p class="splash-logo">Hieu<sup>®</sup></p>
-  <p class="splash-tagline">Saigon · 2026</p>
-  <button class="splash-btn" id="splash-enter-btn">Explore my world</button>
-  <p class="splash-hint">tap anywhere to enter</p>
-  <div class="splash-film-bottom">
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span><span></span>
-  </div>
-</div>
 
 <div id="cur-dot"></div>
 <div id="cur-ring"></div>
@@ -411,7 +287,9 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
 
 <!-- ══ HERO ══ -->
 <section id="hero">
-  <video id="hero-video" data-src="./videos/hero.mp4" loop muted playsinline poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></video>
+  <video id="hero-video" loop muted playsinline poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+    <source data-src="./videos/hero.mp4" type="video/mp4"/>
+  </video>
   <div class="hero-grain"></div>
   <div class="cinema-hero-body">
     <div class="hero-eyebrow animate-fade-rise" data-i18n="hero.eyebrow">Nguyen Ba Hieu · Saigon</div>
@@ -433,7 +311,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
     <p class="sec-sub fade-in" data-i18n="about.sub">Authentic, a little weird, always building something.</p>
     <div class="about-grid fade-in">
       <div class="about-card glass"><div class="ico">🎓</div><h3 data-i18n="about.card1.title">IB Freshman, Saigon University</h3><p data-i18n="about.card1.body">Studying International Business in HCMC, class DKQ1252. Learning how the world does business — and why culture is everything.</p></div>
-      <div class="about-card glass"><div class="ico">🌐</div><h3 data-i18n="about.card2.title">Builder &amp; Entrepreneur</h3><p data-i18n="about.card2.body">Shipping projects while still in school — comics, websites, platforms. I build things before I fully know how. That's the point.</p></div>
+      <div class="about-card glass"><div class="ico">🌐</div><h3 data-i18n="about.card2.title">Builder &amp; Entrepreneur</h3><p data-i18n="about.card2.body">Shipping projects while still in school — comics, websites, platforms. I build things before I fully know how.(with the help of ai) That's the point( i'm still learning the funamendal though).</p></div>
       <div class="about-card glass"><div class="ico">🎵</div><h3 data-i18n="about.card3.title">Music + Movies + Vibes</h3><p data-i18n="about.card3.body">Big music person. Goated movie taste. Gym at 6 PM, café for everything else. Introverted (I'm trying not to be).</p></div>
     </div>
     <div class="lang-row fade-in">
@@ -467,8 +345,8 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
         <div class="proj-body">
           <div class="proj-cat" data-i18n="proj1.cat">Comic Book</div>
           <h3>Sketchs</h3>
-          <p data-i18n="proj1.desc">40 pages. A quiet love story. My first completed comic — it has pages, a cover, and a soul.</p>
-          <p class="proj-credit" data-i18n="proj1.credit">Made with Nano Banana2</p>
+          <p data-i18n="proj1.desc">40 pages. A quiet homo love story, a bit cringe(a lot). My first completed comic — it has pages, a cover, and a soul.i have some more similar stories i wrote in highschool ready to develop too, and i'll do it. </p>
+          <p class="proj-credit" data-i18n="proj1.credit">Made with Nano Banana2, claude, me.</p>
           <div class="proj-tags"><span class="ptag">Comic</span><span class="ptag" data-i18n="tag.origip">Original IP</span><span class="ptag" data-i18n="tag.completed">Completed</span></div>
         </div>
       </div>
@@ -478,8 +356,8 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
         <div class="proj-body">
           <div class="proj-cat" data-i18n="proj2.cat">Comic Book + Novel</div>
           <h3>The Rust</h3>
-          <p data-i18n="proj2.desc">Dystopian Atlanta. Two tiers. Four characters. One conspiracy. World built, 50-page script done. This is the big one.</p>
-          <p class="proj-credit" data-i18n="proj2.credit">Made with Nano Banana2</p>
+          <p data-i18n="proj2.desc">Dystopian Atlanta. Two tiers. Four characters( stranger things inspired). One conspiracy. World built, 70-page script done. This is the big one. 6 hours of work left.</p>
+          <p class="proj-credit" data-i18n="proj2.credit">Made with Nano Banana2, claude, me.</p>
           <div class="proj-tags"><span class="ptag">Comic</span><span class="ptag" data-i18n="tag.novel">Novel</span><span class="ptag">Multiverse</span></div>
         </div>
       </div>
@@ -488,8 +366,8 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
         <div class="proj-thumb t3">🗣️<span class="sbadge lazy" data-i18n="badge.lazy">😴 In progress</span></div>
         <div class="proj-body">
           <div class="proj-cat" data-i18n="proj3.cat">EdTech / Business</div>
-          <h3>IDOMA HUB</h3>
-          <p data-i18n="proj3.desc">English testing platform for Vietnamese learners. 5 learner archetypes, CEFR scoring, differentiated results. Building it.</p>
+          <h3>a part of IDOMA HUB</h3>
+          <p data-i18n="proj3.desc">English testing platform for Vietnamese learners. 5 learner archetypes, CEFR scoring, differentiated results. Building it. now i have the completed diagnostic site. </p>
           <div class="proj-tags"><span class="ptag">EdTech</span><span class="ptag" data-i18n="tag.language">Language</span><span class="ptag">Startup</span></div>
         </div>
       </div>
@@ -535,11 +413,11 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
     <p class="sec-sub fade-in center" data-i18n="movies.sub">Films I love — and exactly why you should watch them too.</p>
     <div class="media-grid fade-in">
       <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(135deg,#1a0a00,#5c2d00);background-image:url('https://i.imgur.com/nArYRG8.jpg');background-size:cover;background-position:center;"></div><div class="media-num">01</div><span class="media-year">1994</span></div><div class="media-body"><div class="media-sub">Wong Kar-wai</div><h3>Chungking Express</h3><p class="media-why" data-i18n="movie1.why">Two lonely cops, two missed connections, one city that pulses like a heartbeat. It makes you fall in love with sadness and neon lights simultaneously — pure 1990s Hong Kong vibe. I watched it for the first time while drunk.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.mood">Mood film</span><span class="mtag" data-i18n="mtag.urban">Urban poetry</span><span class="mtag" data-i18n="mtag.lonely">Loneliness</span></div></div></div>
-      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(135deg,#1a0820,#7a2060,#c45a20);background-image:url('https://media.giphy.com/media/l3vRaHTeHMH0fQ9fG/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;"></div><div class="media-num">02</div><span class="media-year">2016</span></div><div class="media-body"><div class="media-sub">Damien Chazelle</div><h3>La La Land</h3><p class="media-why" data-i18n="movie2.why">For someone who has a lot of dreams — this film about chasing them at the cost of comfort was made for you. Bittersweet and beautiful. I remember every quote except I'm not.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.dreams">Dreams</span><span class="mtag" data-i18n="mtag.music">Music</span><span class="mtag" data-i18n="mtag.bittersweet">Bittersweet</span></div></div></div>
-      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(160deg,#2a1800,#8a5a10,#e8a840);background-image:url('https://media.giphy.com/media/l4EpbyFTmfogjyA3m/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;"></div><div class="media-num">03</div><span class="media-year">2017</span></div><div class="media-body"><div class="media-sub">Luca Guadagnino</div><h3>Call Me by Your Name</h3><p class="media-why" data-i18n="movie3.why">A golden, aching summer that rewires you completely. The authenticity you value bleeds out of every frame. The score alone will haunt you for weeks.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.authentic">Authentic</span><span class="mtag" data-i18n="mtag.sensory">Sensory</span><span class="mtag" data-i18n="mtag.coming">Coming of age</span></div></div></div>
-      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(135deg,#00101a,#003d5c,#006080);background-image:url('https://media.giphy.com/media/3o72F6A3rtzW6p4joQ/giphy.gif');background-size:cover;background-position:center;"></div><div class="media-num">04</div><span class="media-year">1997</span></div><div class="media-body"><div class="media-sub">Wong Kar-wai</div><h3>Happy Together</h3><p class="media-why" data-i18n="movie4.why">Two people pulling apart in Buenos Aires. Beautifully shot, emotionally devastating. If Chungking Express hit you, this one will wreck you — in the best way.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.heartbreak">Heartbreak</span><span class="mtag" data-i18n="mtag.identity">Identity</span><span class="mtag" data-i18n="mtag.visual">Visual poetry</span></div></div></div>
+      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(135deg,#1a0a14,#5c1a3c);"></div><div class="media-num">02</div><span class="media-year">2016</span></div><div class="media-body"><div class="media-sub">Damien Chazelle</div><h3>La La Land</h3><p class="media-why" data-i18n="movie2.why">For someone who has a lot of dreams — this film about chasing them at the cost of comfort was made for you. Bittersweet and beautiful. I remember every quote except I'm not.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.dreams">Dreams</span><span class="mtag" data-i18n="mtag.music">Music</span><span class="mtag" data-i18n="mtag.bittersweet">Bittersweet</span></div></div></div>
+      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(135deg,#1a1400,#5c4800);"></div><div class="media-num">03</div><span class="media-year">2017</span></div><div class="media-body"><div class="media-sub">Luca Guadagnino</div><h3>Call Me by Your Name</h3><p class="media-why" data-i18n="movie3.why">A golden, aching summer that rewires you completely. The authenticity you value bleeds out of every frame. The score alone will haunt you for weeks.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.authentic">Authentic</span><span class="mtag" data-i18n="mtag.sensory">Sensory</span><span class="mtag" data-i18n="mtag.coming">Coming of age</span></div></div></div>
+      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(135deg,#00101a,#003d5c);background-image:url('https://media.giphy.com/media/3o72F6A3rtzW6p4joQ/giphy.gif');background-size:cover;background-position:center;"></div><div class="media-num">04</div><span class="media-year">1997</span></div><div class="media-body"><div class="media-sub">Wong Kar-wai</div><h3>Happy Together</h3><p class="media-why" data-i18n="movie4.why">Two people pulling apart in Buenos Aires. Beautifully shot, emotionally devastating. If Chungking Express hit you, this one will wreck you — in the best way.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.heartbreak">Heartbreak</span><span class="mtag" data-i18n="mtag.identity">Identity</span><span class="mtag" data-i18n="mtag.visual">Visual poetry</span></div></div></div>
       <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(135deg,#1a1000,#5c4500);background-image:url('https://causewayfilms.com.au/media/pages/films/of-an-age/e0880f4246-1658816717/16a3865-1920x1080-crop-81-58.jpg');background-size:cover;background-position:center;"></div><div class="media-num">05</div><span class="media-year">2023</span></div><div class="media-body"><div class="media-sub">Goran Stolevski</div><h3>Of an Age</h3><p class="media-why" data-i18n="movie5.why">One afternoon, one car ride, a conversation that changes everything. Raw and precisely 18 years old. You'll watch this and feel seen in a way that's almost uncomfortable.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.intimacy">Intimacy</span><span class="mtag" data-i18n="mtag.youth">Youth</span><span class="mtag" data-i18n="mtag.oneday">One day</span></div></div></div>
-      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(160deg,#0a1200,#1e3a10,#4a7a28);background-image:url('https://media.giphy.com/media/3o6fIUVP0DJ7MYVb6E/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;"></div><div class="media-num">06</div><span class="media-year">2017</span></div><div class="media-body"><div class="media-sub">Francis Lee</div><h3>God's Own Country</h3><p class="media-why" data-i18n="movie6.why">Rough, quiet, and deeply human. No drama for drama's sake — just two people being real with each other. Authenticity in its purest, most unpolished form.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.raw">Raw</span><span class="mtag" data-i18n="mtag.quiet">Quiet intensity</span><span class="mtag" data-i18n="mtag.human">Human</span></div></div></div>
+      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(135deg,#0a1500,#2d5c00);background-image:url('https://media.giphy.com/media/3o6fIUVP0DJ7MYVb6E/giphy.gif');background-size:cover;background-position:center;"></div><div class="media-num">06</div><span class="media-year">2017</span></div><div class="media-body"><div class="media-sub">Francis Lee</div><h3>God's Own Country</h3><p class="media-why" data-i18n="movie6.why">Rough, quiet, and deeply human. No drama for drama's sake — just two people being real with each other. Authenticity in its purest, most unpolished form.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.raw">Raw</span><span class="mtag" data-i18n="mtag.quiet">Quiet intensity</span><span class="mtag" data-i18n="mtag.human">Human</span></div></div></div>
     </div>
   </div>
 </section>
@@ -729,13 +607,12 @@ document.getElementById('lang-toggle-btn').addEventListener('click', () => {
 const isMobile = window.matchMedia('(max-width:767px)').matches;
 
 function loadAndPlay(video) {
-  if (video.dataset.loaded) { video.play().catch(()=>{}); return; }
+  if (video.dataset.loaded) { video.play(); return; }
   video.dataset.loaded = '1';
-  const sourceEl = video.querySelector('source');
-  const src = video.dataset.srcSd || video.dataset.src || (sourceEl ? (sourceEl.dataset.srcSd || sourceEl.dataset.src) : '');
-  if (!src) return;
-  if (video.tagName === 'VIDEO' && sourceEl) {
-    sourceEl.src = src;
+  // prefer data-src-sd (SD override) else fall back to data-src
+  const src = video.dataset.srcSd || video.dataset.src;
+  if (video.tagName === 'VIDEO' && video.querySelector('source')) {
+    video.querySelector('source').src = src;
   } else {
     video.src = src;
   }
@@ -747,80 +624,20 @@ function loadAndPlay(video) {
   }, {once:true});
 }
 
-// ── SPLASH SCREEN LOGIC ──
-const splash = document.getElementById('splash');
-let siteUnlocked = false;
-
-function dismissSplash() {
-  if (siteUnlocked) return;
-  siteUnlocked = true;
-
-  // 1. Hide splash with fade
-  splash.classList.add('hidden');
-
-  // 2. On mobile: now that user has interacted, enable video visibility
-  if (isMobile) {
-    // Remove the CSS rule that hides .sec-video on mobile
-    const mobileStyle = document.createElement('style');
-    mobileStyle.textContent = `
-      @media(max-width:767px){
-        .sec-video { display:block !important; }
-        section.content-sec { background: var(--warm-dark); }
-      }
-    `;
-    document.head.appendChild(mobileStyle);
-
-    // Load & play hero video
-    const heroVideo = document.getElementById('hero-video');
-    heroVideo.style.display = '';
-    loadAndPlay(heroVideo);
-
-    // Set up intersection observer for section videos
-    const secVideos = document.querySelectorAll('.sec-video[data-src]');
-    const playObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const v = entry.target;
-        if (entry.isIntersecting) {
-          loadAndPlay(v);
-        } else {
-          if (!v.paused) v.pause();
-        }
-      });
-    }, { rootMargin: '300px 0px', threshold: 0 });
-    secVideos.forEach(v => {
-      v.setAttribute('preload', 'none');
-      playObserver.observe(v);
-    });
-  }
-
-  // 3. Remove splash from DOM after transition ends
-  splash.addEventListener('transitionend', () => splash.remove(), {once:true});
-}
-
-// Tap/click anywhere on splash to enter
-splash.addEventListener('click', dismissSplash);
-splash.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' ') dismissSplash(); });
-document.getElementById('splash-enter-btn').addEventListener('click', (e) => {
-  e.stopPropagation();
-  dismissSplash();
-});
-
-// Desktop: also dismiss on first scroll (nice UX)
-if (!isMobile) {
-  window.addEventListener('wheel', dismissSplash, {once: true, passive: true});
-}
-
-// Hero — load immediately on DESKTOP only (mobile waits for splash tap)
+// Hero — load immediately on desktop, skip on mobile
 const heroVideo = document.getElementById('hero-video');
 if (!isMobile) {
   loadAndPlay(heroVideo);
 } else {
-  heroVideo.style.display = 'none'; // hidden until splash dismissed
+  // mobile: just show a warm dark bg, no video
+  heroVideo.style.display = 'none';
 }
 
-// Section videos — desktop only (mobile handled inside dismissSplash)
+// Section videos — load only when 300px from viewport
+// pause immediately when leaving viewport (saves bandwidth + CPU)
 if (!isMobile) {
   const secVideos = document.querySelectorAll('.sec-video[data-src]');
+
   const playObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const v = entry.target;
@@ -831,6 +648,7 @@ if (!isMobile) {
       }
     });
   }, { rootMargin: '300px 0px', threshold: 0 });
+
   secVideos.forEach(v => {
     v.setAttribute('preload', 'none');
     playObserver.observe(v);
@@ -1024,9 +842,11 @@ loadFeed();
 (function() {
   const audio = new Audio('./music.mp3');
   audio.loop = true;
+  audio.preload = 'auto';
   audio.volume = 0;
 
   let started = false;
+  let isStarting = false;
   let muted = false;
 
   // Fade volume in/out smoothly
@@ -1044,16 +864,21 @@ loadFeed();
   }
 
   function startMusic() {
-    if (started) return;
-    started = true;
-    audio.play().then(() => fadeTo(0.28, 2000)).catch(() => {});
+    if (started || isStarting) return;
+    isStarting = true;
+    audio.play().then(() => {
+      started = true;
+      fadeTo(0.28, 2000);
+    }).catch(() => {
+      // Keep music startable on next user gesture if the first attempt is blocked.
+      started = false;
+    }).finally(() => {
+      isStarting = false;
+    });
   }
 
-  // Start on first interaction anywhere on the page
-  // (splash tap on mobile will also call startMusic via this listener)
-  ['click','touchstart','keydown'].forEach(evt =>
-    document.addEventListener(evt, startMusic, {once: true})
-  );
+  // Start on first click anywhere on the page.
+  document.addEventListener('click', startMusic, { once: true, capture: true });
 
   // ── MUSIC BUTTON ──
   const btn = document.getElementById('music-toggle-btn');
@@ -1061,19 +886,7 @@ loadFeed();
 
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
-
-    // If blocked or paused, force play on explicit button tap
-    if (audio.paused) {
-      audio.play().then(() => {
-        started = true;
-        muted = false;
-        fadeTo(0.28, 800);
-        btn.classList.remove('muted');
-        btn.title = 'Mute music';
-      }).catch(err => console.error("Audio block persists:", err));
-      return;
-    }
-
+    if (!started) { startMusic(); return; }
     muted = !muted;
     if (muted) {
       fadeTo(0, 800);
