@@ -455,7 +455,7 @@ footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300
 <footer id="contact">
   <p data-i18n="footer.text">Made with <span class="heart">♥</span> somewhere between a lecture and the gym · Let's connect, Hieu.</p>
   <div class="social-row">
-    <a class="social-btn" href="/cdn-cgi/l/email-protection#f79f9e9282b7928f969a879b92d994989a">Email</a>
+    <a class="social-btn" href="https://m.facebook.com/nguyenba.hieu.520">facebook</a>
     <a class="social-btn" href="#" data-i18n="footer.social">Not gr*ndr</a>
   </div>
 </footer>
@@ -609,10 +609,12 @@ const isMobile = window.matchMedia('(max-width:767px)').matches;
 function loadAndPlay(video) {
   if (video.dataset.loaded) { video.play(); return; }
   video.dataset.loaded = '1';
-  // prefer data-src-sd (SD override) else fall back to data-src
-  const src = video.dataset.srcSd || video.dataset.src;
-  if (video.tagName === 'VIDEO' && video.querySelector('source')) {
-    video.querySelector('source').src = src;
+  const sourceEl = video.querySelector('source');
+  // prefer SD override, then normal source; support both <video data-src> and <source data-src>
+  const src = video.dataset.srcSd || video.dataset.src || sourceEl?.dataset.srcSd || sourceEl?.dataset.src;
+  if (!src) return;
+  if (video.tagName === 'VIDEO' && sourceEl) {
+    sourceEl.src = src;
   } else {
     video.src = src;
   }
@@ -840,7 +842,7 @@ loadFeed();
 // BACKGROUND MUSIC
 // ══════════════════════════════════════
 (function() {
-  const audio = new Audio('./music.mp3');
+  const audio = new Audio('./videos/music.mp4');
   audio.loop = true;
   audio.preload = 'auto';
   audio.volume = 0;
