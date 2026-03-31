@@ -186,7 +186,7 @@
                     if (!v.paused) v.pause();
                 }
             });
-        }, { rootMargin: '300px 0px', threshold: 0 });
+        }, { rootMargin: '0px', threshold: 0.01 });
 
         secVideos.forEach(v => {
             v.setAttribute('preload', 'none');
@@ -229,6 +229,25 @@
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
         fadeEls.forEach(el => fadeObserver.observe(el));
+
+        // ══════════════════════════════════════
+        // LAZY LOAD BACKGROUND IMAGES
+        // ══════════════════════════════════════
+        const bgEls = document.querySelectorAll('[data-bg]');
+        const bgObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const bgUrl = el.getAttribute('data-bg');
+                    if (bgUrl) {
+                        el.style.backgroundImage = `url('${bgUrl}')`;
+                        el.removeAttribute('data-bg');
+                    }
+                    bgObserver.unobserve(el);
+                }
+            });
+        }, { rootMargin: '400px 0px' });
+        bgEls.forEach(el => bgObserver.observe(el));
 
         // ══════════════════════════════════════
         // PARALLAX (desktop only)
