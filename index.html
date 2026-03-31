@@ -1,913 +1,482 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Nguyen Ba Hieu</title>
-<meta name="description" content="Nguyen Ba Hieu — Saigon-based, self-taught in everything that matters, freshman in everything else."/>
-<meta property="og:title" content="Nguyen Ba Hieu"/>
-<meta property="og:description" content="Saigon-based, self-taught in everything that matters, freshman in everything else.( this site looks more professional if u are using laptop, and less cringy in english cause i wrote it in english)"/>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --gold:#E8A44A;
-  --amber:#D4724A;
-  --rose:#B8728A;
-  --dusk:#5A7AB5;
-  --sage:#5A8A6A;
-  --cream:#FAF6EF;
-  --warm-dark:#1A1410;
-  --warm-mid:#231E18;
-  --warm-card:#2A2318;
-  --text:#F5EFE4;
-  --muted:#9A8E7E;
-  --font-display:'Instrument Serif',serif;
-  --font-body:'DM Sans',sans-serif;
-  --glass-bg:rgba(250,246,239,0.07);
-  --glass-border:rgba(232,164,74,0.18);
-  --ease-out:cubic-bezier(0.23,1,0.32,1);
-}
-html{scroll-behavior:smooth;}
-body{font-family:var(--font-body);background:var(--warm-dark);color:var(--text);overflow-x:hidden;cursor:none;}
-a{color:inherit;text-decoration:none;}
-@media(hover:none){body{cursor:auto;}}
-
-/* ── CURSOR ── */
-#cur-dot{position:fixed;width:6px;height:6px;background:#fff;border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .3s,border-color .3s;mix-blend-mode:difference;}
-#cur-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(255,255,255,0.35);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .35s var(--ease-out),height .35s var(--ease-out),border-color .4s,opacity .3s;}
-body.cur-gold #cur-dot{background:var(--gold);width:8px;height:8px;}
-body.cur-gold #cur-ring{width:52px;height:52px;border-color:rgba(232,164,74,0.55);}
-body.cur-btn #cur-dot{background:var(--cream);width:10px;height:10px;}
-body.cur-btn #cur-ring{width:58px;height:58px;border-color:rgba(250,246,239,0.4);}
-@media(hover:none){#cur-dot,#cur-ring{display:none;}}
-
-/* ── FILM CUT FLASH ── */
-#film-cut{position:fixed;inset:0;background:var(--cream);opacity:0;pointer-events:none;z-index:99990;transition:opacity .06s;}
-#film-cut.flash{opacity:0.12;}
-
-/* ── LIQUID GLASS ── */
-.glass{background:var(--glass-bg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--glass-border);position:relative;overflow:hidden;}
-.glass::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(160deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,.04) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.08) 100%);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;}
-
-/* ── LANG TOGGLE ── */
-.lang-toggle{display:flex;align-items:center;gap:.5rem;background:rgba(250,246,239,0.08);border:1px solid rgba(250,246,239,0.14);border-radius:999px;padding:.28rem .28rem .28rem .75rem;cursor:none;font-size:.75rem;color:var(--muted);transition:border-color .2s,background .2s;user-select:none;}
-.lang-toggle:hover{border-color:rgba(232,164,74,.35);background:rgba(232,164,74,0.08);}
-.lang-toggle .flag-pill{background:rgba(232,164,74,0.15);border-radius:999px;padding:.22rem .6rem;font-size:.76rem;color:var(--text);font-weight:500;min-width:44px;text-align:center;}
-[data-i18n]{transition:opacity .18s ease;}
-[data-i18n].switching{opacity:0;}
-
-/* ── SHARED SECTION ── */
-section.content-sec{padding:6rem 2rem;position:relative;overflow:hidden;min-height:100vh;display:flex;flex-direction:column;justify-content:center;}
-.sec-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transition:opacity 1.6s ease;filter:saturate(1.1);}
-.sec-video.loaded{opacity:1;}
-.sec-overlay{position:absolute;inset:0;z-index:1;}
-.sec-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;width:100%;}
-.sec-label{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;font-weight:500;opacity:.9;}
-.sec-title{font-family:var(--font-display);font-size:clamp(1.9rem,4vw,3rem);font-weight:400;margin-bottom:.5rem;line-height:1.1;color:var(--text);}
-.sec-sub{color:var(--muted);font-size:.88rem;margin-bottom:2.8rem;line-height:1.7;max-width:500px;}
-.center{text-align:center;}
-.center .sec-sub{margin-left:auto;margin-right:auto;}
-
-/* ── PARALLAX WRAPPER ── */
-.parallax-bg{transform:translateY(0);will-change:transform;}
-
-/* ── ANIMATIONS ── */
-@keyframes fade-rise{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
-.fade-in{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease-out),transform .9s var(--ease-out);}
-.fade-in.visible{opacity:1;transform:translateY(0);}
-
-/* ══ NAV ══ */
-.cinema-nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;padding:1.2rem 2rem;max-width:1280px;margin:0 auto;width:100%;transition:background .3s,backdrop-filter .3s;}
-.cinema-nav.scrolled{background:rgba(26,20,16,0.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(232,164,74,0.1);}
-.cinema-logo{font-family:var(--font-display);font-size:1.7rem;letter-spacing:-.02em;color:var(--text);}
-.cinema-logo sup{font-size:.6rem;vertical-align:super;color:var(--gold);}
-.cinema-nav-links{display:none;}
-@media(min-width:768px){
-  .cinema-nav-links{display:flex;gap:1.8rem;font-size:.8rem;color:var(--muted);}
-  .cinema-nav-links a{transition:color .2s;letter-spacing:.04em;}
-  .cinema-nav-links a:hover,.cinema-nav-links a.active{color:var(--text);}
-}
-.nav-right{display:flex;align-items:center;gap:.75rem;}
-.hint-text{margin-top:.4rem;font-size:.72rem;color:var(--gold);opacity:0;transition:opacity .2s;pointer-events:none;text-align:right;}
-.hint-text.show{opacity:1;}
-
-/* ══ HERO ══ */
-#hero{position:relative;width:100%;min-height:100vh;overflow:hidden;display:flex;flex-direction:column;background:#120E0A;}
-#hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;transition:opacity 1.8s ease;filter:saturate(1.15) brightness(0.88);}
-#hero-video.loaded{opacity:1;}
-#hero-video-blur{position:absolute;inset:0;z-index:0;filter:blur(0px) brightness(0.6);transition:filter 1.8s ease;}
-#hero::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(26,20,16,0.35) 0%,rgba(18,14,10,0.55) 100%);z-index:1;}
-.hero-grain{position:absolute;inset:0;z-index:2;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px;}
-.cinema-hero-body{position:relative;z-index:10;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 1.5rem 5rem;}
-.hero-eyebrow{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;opacity:.85;}
-.cinema-hero-body h1{font-family:var(--font-display);font-size:clamp(3rem,8vw,6.5rem);line-height:.92;letter-spacing:-2px;font-weight:400;color:var(--text);max-width:1000px;}
-.cinema-hero-body h1 em{font-style:italic;color:rgba(245,239,228,0.55);}
-.cinema-sub{color:rgba(245,239,228,0.65);font-size:clamp(.88rem,1.4vw,1.02rem);max-width:500px;margin-top:2rem;line-height:1.75;font-weight:300;}
-.cinema-cta-hero{border-radius:999px;padding:.9rem 3rem;font-size:.88rem;color:var(--text);cursor:none;margin-top:2.6rem;transition:transform .25s var(--ease-out),background .2s;letter-spacing:.06em;}
-.cinema-cta-hero:hover{transform:scale(1.04);}
-.hero-scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:.4;}
-.scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite;}
-@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(.8);}50%{opacity:1;transform:scaleY(1);}}
-
-/* ══ ABOUT ══ */
-#about .sec-overlay{background:linear-gradient(to right,rgba(26,20,16,0.82) 0%,rgba(26,20,16,0.55) 60%,rgba(26,20,16,0.3) 100%);}
-.about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:2rem;}
-.about-card{border-radius:18px;padding:1.4rem;transition:.3s var(--ease-out);cursor:none;}
-.about-card:hover{transform:translateY(-6px) scale(1.01);border-color:rgba(232,164,74,0.35);}
-.about-card .ico{font-size:1.3rem;margin-bottom:.7rem;}
-.about-card h3{font-size:.88rem;font-weight:500;margin-bottom:.35rem;color:var(--text);}
-.about-card p{font-size:.8rem;color:var(--muted);line-height:1.65;}
-.pills{display:flex;flex-wrap:wrap;gap:.45rem;}
-.pill{background:rgba(232,164,74,0.08);border:1px solid rgba(232,164,74,0.18);border-radius:999px;padding:.28rem .82rem;font-size:.74rem;color:var(--muted);transition:.2s;}
-.pill:hover{background:rgba(232,164,74,0.15);color:var(--text);}
-.lang-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1.2rem;}
-.lang{background:rgba(250,246,239,0.06);border:1px solid rgba(250,246,239,0.1);border-radius:999px;padding:.26rem .78rem;font-size:.73rem;color:var(--muted);}
-
-/* ══ PROJECTS ══ */
-#projects .sec-overlay{background:linear-gradient(to bottom,rgba(18,14,10,0.7) 0%,rgba(26,20,16,0.6) 50%,rgba(18,14,10,0.75) 100%);}
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.2rem;}
-.proj-card{border-radius:20px;overflow:hidden;transition:.3s var(--ease-out);}
-.proj-card:hover{transform:translateY(-7px) scale(1.01);}
-.proj-card:hover .proj-glow{opacity:1;}
-.proj-glow{position:absolute;inset:0;border-radius:inherit;opacity:0;transition:opacity .4s;pointer-events:none;}
-.proj-thumb{height:140px;display:flex;align-items:center;justify-content:center;font-size:2.6rem;position:relative;overflow:hidden;}
-.proj-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(18,14,10,0.6));}
-.t1{background:linear-gradient(135deg,#2A1A0A,#5C3A18);}
-.t2{background:linear-gradient(135deg,#1A1228,#3A2855);}
-.t3{background:linear-gradient(135deg,#0A1A14,#184A30);}
-.sbadge{position:absolute;top:.7rem;right:.7rem;font-size:.63rem;padding:.2rem .62rem;border-radius:999px;font-weight:600;z-index:2;}
-.done{background:rgba(90,138,106,.2);color:#7ACA8A;border:1px solid rgba(90,138,106,.3);}
-.ongoing{background:rgba(232,164,74,.15);color:var(--gold);border:1px solid rgba(232,164,74,.25);}
-.lazy{background:rgba(180,114,138,.15);color:#D494A8;border:1px solid rgba(180,114,138,.25);}
-.proj-body{padding:1.2rem;}
-.proj-cat{font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;opacity:.8;}
-.proj-body h3{font-size:.95rem;font-weight:500;margin-bottom:.35rem;color:var(--text);}
-.proj-body p{font-size:.8rem;color:var(--muted);line-height:1.6;}
-.proj-credit{font-size:.7rem;color:rgba(232,164,74,.5);margin-top:.4rem;font-style:italic;}
-.proj-tags{display:flex;flex-wrap:wrap;gap:.38rem;margin-top:.75rem;}
-.ptag{font-size:.64rem;padding:.2rem .58rem;border-radius:999px;border:1px solid rgba(250,246,239,0.12);color:var(--muted);}
-
-/* ══ FEED ══ */
-#feed .sec-overlay{background:linear-gradient(to right,rgba(18,14,10,0.78) 0%,rgba(26,20,16,0.5) 100%);}
-.feed-controls{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem;}
-.feed-filter{background:rgba(250,246,239,0.06);border:1px solid rgba(250,246,239,0.1);border-radius:999px;padding:.3rem .9rem;font-size:.73rem;color:var(--muted);cursor:none;transition:.2s;user-select:none;}
-.feed-filter:hover{border-color:rgba(232,164,74,.3);color:var(--text);}
-.feed-filter.active{background:rgba(232,164,74,0.15);border-color:rgba(232,164,74,0.4);color:var(--gold);}
-.feed-divider{width:100%;height:1px;background:rgba(250,246,239,0.06);margin:.2rem 0;}
-.feed-list{display:flex;flex-direction:column;gap:.85rem;max-width:680px;}
-.feed-entry{border-radius:16px;padding:1.1rem 1.3rem;transition:.25s var(--ease-out);}
-.feed-entry:hover{transform:translateX(4px);border-color:rgba(232,164,74,0.3);}
-.feed-top{display:flex;align-items:center;gap:.65rem;margin-bottom:.55rem;}
-.feed-type{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;padding:.22rem .7rem;border-radius:999px;font-weight:500;}
-.ft-building{background:rgba(90,122,181,.15);color:#8AAAE8;border:1px solid rgba(90,122,181,.25);}
-.ft-watching{background:rgba(180,114,138,.15);color:#D494A8;border:1px solid rgba(180,114,138,.25);}
-.ft-listening{background:rgba(232,164,74,.12);color:var(--gold);border:1px solid rgba(232,164,74,.22);}
-.ft-thinking{background:rgba(90,138,106,.15);color:#7ACA8A;border:1px solid rgba(90,138,106,.25);}
-.ft-shipping{background:rgba(212,114,74,.15);color:#E89A74;border:1px solid rgba(212,114,74,.25);}
-.feed-date{font-size:.72rem;color:var(--muted);margin-left:auto;}
-.feed-text{font-size:.88rem;color:rgba(245,239,228,0.85);line-height:1.7;font-weight:300;}
-.feed-text a{color:var(--gold);text-decoration:underline;text-underline-offset:3px;}
-.feed-tags{display:flex;flex-wrap:wrap;gap:.38rem;margin-top:.65rem;}
-.feed-tag{font-size:.64rem;padding:.18rem .58rem;border-radius:999px;border:1px solid rgba(250,246,239,0.1);color:var(--muted);}
-.feed-empty{font-size:.88rem;color:var(--muted);padding:2rem 0;font-style:italic;}
-
-/* ══ MOVIES ══ */
-#movies .sec-overlay{background:linear-gradient(to bottom,rgba(18,14,10,0.68) 0%,rgba(18,14,10,0.45) 50%,rgba(18,14,10,0.72) 100%);}
-.media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.3rem;}
-.media-card{border-radius:20px;overflow:hidden;transition:.3s var(--ease-out);display:flex;flex-direction:column;}
-.media-card:hover{transform:translateY(-6px);}
-.media-card:hover .media-banner-img{transform:scale(1.05);}
-.media-banner{height:130px;position:relative;overflow:hidden;}
-.media-banner-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease-out);}
-.media-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(18,14,10,.75));}
-.media-num{font-family:var(--font-display);font-size:3rem;font-weight:400;line-height:1;opacity:.13;position:absolute;right:.9rem;top:.3rem;color:#fff;z-index:2;}
-.media-year{font-size:.66rem;background:rgba(250,246,239,.1);border-radius:999px;padding:.18rem .58rem;color:rgba(250,246,239,.6);font-weight:500;position:absolute;bottom:.8rem;left:.9rem;z-index:2;backdrop-filter:blur(4px);}
-.media-body{padding:1.1rem;flex:1;display:flex;flex-direction:column;gap:.4rem;}
-.media-sub{font-size:.66rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;}
-.media-body h3{font-family:var(--font-display);font-size:1.05rem;font-weight:400;line-height:1.25;color:var(--text);}
-.media-why{font-size:.8rem;color:var(--muted);line-height:1.65;flex:1;}
-.media-tags{display:flex;flex-wrap:wrap;gap:.38rem;margin-top:.4rem;}
-.mtag{font-size:.64rem;padding:.18rem .55rem;border-radius:999px;border:1px solid rgba(250,246,239,.1);color:var(--muted);}
-
-/* ══ MUSIC ══ */
-#music .sec-overlay{background:linear-gradient(160deg,rgba(26,20,16,0.8) 0%,rgba(18,14,10,0.5) 100%);}
-.vinyl{position:absolute;right:-.4rem;top:50%;transform:translateY(-50%);width:60px;height:60px;border-radius:50%;opacity:.2;border:9px solid rgba(255,255,255,.25);border-top-color:rgba(255,255,255,.55);z-index:3;}
-.a1{background:linear-gradient(135deg,#2A0818,#6A2040);background-image:url('https://media.giphy.com/media/r0o46oy9obYLC/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;}
-.a2{background:linear-gradient(135deg,#18082A,#4A1870);background-image:url('https://media.giphy.com/media/Q0CL9ooVe5dKg/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;}
-.a3{background:linear-gradient(135deg,#0A1208,#283A18);background-image:url('https://media.giphy.com/media/Bpq9AhnKhxYm3tex16/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;}
-.a4{background:linear-gradient(135deg,#080C18,#182848);background-image:url('https://media.giphy.com/media/25NTEcjA8XxPW/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;}
-.a5{background:linear-gradient(135deg,#180828,#4A1858);background-image:url('https://media.giphy.com/media/wtU2g7aiYE6I0/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;}
- 
-/* ══ NOW PLAYING ══ */
-#now-playing-wrap{display:flex;justify-content:center;margin-top:2.5rem;}
-#now-playing-widget{display:flex;align-items:center;gap:1rem;border-radius:18px;padding:1rem 1.3rem;text-decoration:none;color:inherit;width:100%;max-width:440px;transition:.3s var(--ease-out);}
-#now-playing-widget:hover{transform:translateY(-3px);border-color:rgba(232,164,74,.35);}
-#np-art-wrap{position:relative;flex-shrink:0;width:56px;height:56px;}
-#np-art{width:56px;height:56px;border-radius:10px;object-fit:cover;display:block;background:rgba(250,246,239,.06);}
-#np-vinyl{position:absolute;right:-12px;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 50%,#1A1410 18%,#100C08 19%,#181410 48%,#100C08 49%);border:2px solid rgba(255,255,255,.08);opacity:0;transition:opacity .4s;}
-#now-playing-widget.playing #np-vinyl{opacity:1;animation:spin 4s linear infinite;}
-@keyframes spin{to{transform:translateY(-50%) rotate(360deg);}}
-#np-info{flex:1;min-width:0;}
-#np-status{display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem;}
-#np-label{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:#1DB954;font-weight:600;}
-#now-playing-widget.idle #np-label{color:var(--muted);}
-#np-bars{display:flex;align-items:flex-end;gap:2px;height:11px;}
-#np-bars span{display:block;width:3px;background:#1DB954;border-radius:2px;animation:eq .8s ease-in-out infinite alternate;}
-#np-bars span:nth-child(1){animation-duration:.6s;height:40%;}
-#np-bars span:nth-child(2){animation-duration:.9s;height:80%;animation-delay:.1s;}
-#np-bars span:nth-child(3){animation-duration:.7s;height:60%;animation-delay:.2s;}
-#np-bars span:nth-child(4){animation-duration:1s;height:90%;animation-delay:.05s;}
-@keyframes eq{to{height:100%;}}
-#now-playing-widget.idle #np-bars span{height:30%!important;animation:none;background:var(--muted);}
-#np-title{font-size:.88rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);}
-#np-artist{font-size:.76rem;color:var(--muted);margin-top:.15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-#np-progress-track{height:2px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:.65rem;overflow:hidden;}
-#np-progress-fill{height:100%;width:0%;background:#1DB954;border-radius:2px;transition:width 1s linear;}
-
-/* ══ FOOTER ══ */
-footer{text-align:center;padding:3rem 2rem;border-top:1px solid rgba(232,164,74,0.1);position:relative;z-index:2;}
-footer p{color:var(--muted);font-size:.8rem;margin-bottom:1.2rem;font-weight:300;}
-.social-row{display:flex;justify-content:center;gap:.7rem;flex-wrap:wrap;}
-.social-btn{padding:.42rem 1.1rem;border-radius:999px;border:1px solid rgba(250,246,239,.12);font-size:.76rem;color:var(--muted);transition:.2s;cursor:none;}
-.social-btn:hover{background:rgba(232,164,74,.08);border-color:rgba(232,164,74,.3);color:var(--text);}
-.heart{color:var(--amber);}
-/* ── MUSIC TOGGLE ── */
-.music-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;background:rgba(250,246,239,0.07);border:1px solid rgba(250,246,239,0.14);color:var(--muted);cursor:none;transition:background .2s,border-color .2s,color .2s,opacity .2s;flex-shrink:0;}
-.music-btn:hover{background:rgba(232,164,74,0.12);border-color:rgba(232,164,74,0.35);color:var(--gold);}
-.music-btn.muted{opacity:.4;}
-.music-btn.muted:hover{opacity:1;}
-
-/* ══ MOBILE ══ */
-@media(max-width:767px){
-  section.content-sec{padding:5rem 1.2rem;min-height:auto;}
-  .sec-video{display:none;}
-  .sec-overlay{background:rgba(18,14,10,0.92)!important;}
-  .cinema-nav{padding:1rem 1.2rem;}
-  .cinema-hero-body{padding:7rem 1.2rem 4rem;}
-  .cinema-hero-body h1{font-size:clamp(2.4rem,10vw,3.5rem);}
-  .about-grid{grid-template-columns:1fr;}
-  .media-grid{grid-template-columns:1fr;}
-  .projects-grid{grid-template-columns:1fr;}
-  .feed-controls{overflow-x:auto;flex-wrap:nowrap;padding-bottom:.4rem;-webkit-overflow-scrolling:touch;}
-  .feed-filter{flex-shrink:0;}
-  #now-playing-widget{max-width:100%;}
-}
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nguyen Ba Hieu</title>
+    <meta name="description"
+        content="Nguyen Ba Hieu — Saigon-based, self-taught in everything that matters, freshman in everything else." />
+    <meta property="og:title" content="Nguyen Ba Hieu" />
+    <meta property="og:description"
+        content="Saigon-based, self-taught in everything that matters, freshman in everything else.( this site looks more professional if u are using laptop, and less cringy in english cause i wrote it in english)" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<div id="cur-dot"></div>
-<div id="cur-ring"></div>
-<div id="film-cut"></div>
+    <div id="cur-dot"></div>
+    <div id="cur-ring"></div>
+    <div id="film-cut"></div>
 
-<!-- ══ NAV ══ -->
-<nav class="cinema-nav" id="main-nav">
-  <div class="cinema-logo">Hieu<sup>®</sup></div>
-  <div class="cinema-nav-links">
-    <a href="#hero" class="active" data-i18n="nav.home">Home</a>
-    <a href="#about" data-i18n="nav.about">About</a>
-    <a href="#projects" data-i18n="nav.projects">Projects</a>
-    <a href="#feed" data-i18n="nav.feed">Feed</a>
-    <a href="#movies" data-i18n="nav.films">Films</a>
-    <a href="#music" data-i18n="nav.music">Music</a>
-  </div>
-  <div class="nav-right">
-    <button id="music-toggle-btn" class="music-btn" title="Play music" aria-label="Toggle background music"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 2.5L11 1V8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="3.5" cy="10" r="2" stroke="currentColor" stroke-width="1.2"/><circle cx="9.5" cy="8.5" r="2" stroke="currentColor" stroke-width="1.2"/></svg></button>
-    <button id="lang-toggle-btn" class="lang-toggle" title="Switch language">
-      <span class="label" id="lang-label">Switch to</span>
-      <span class="flag-pill" id="lang-flag">🇻🇳 VI</span>
-    </button>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;">
-      <button id="say-hello-btn" class="glass cinema-cta-nav" style="border-radius:999px;padding:.5rem 1.3rem;font-size:.78rem;color:var(--text);cursor:none;" data-i18n="hero.sayHello">Say hello</button>
-      <span id="say-hello-hint" class="hint-text" data-i18n="hero.sayHelloHint">hello! really glad you're here!</span>
-    </div>
-  </div>
-</nav>
-
-<!-- ══ HERO ══ -->
-<section id="hero">
-  <video id="hero-video" loop muted playsinline poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
-    <source data-src="./videos/hero.mp4" data-src-sd="./videos/hero-mobile.mp4" type="video/mp4"/>
-  </video>
-  <div class="hero-grain"></div>
-  <div class="cinema-hero-body">
-    <div class="hero-eyebrow animate-fade-rise" data-i18n="hero.eyebrow">Nguyen Ba Hieu · Saigon</div>
-    <h1 class="animate-fade-rise" style="animation-delay:.1s" data-i18n="hero.title">Student. <em>Creator.</em></h1>
-    <p class="cinema-sub animate-fade-rise" style="animation-delay:.25s" data-i18n="hero.sub">Saigon-based, self-taught in everything that matters, freshman in everything else.</p>
-    <a href="#about" id="explore-btn" class="glass cinema-cta-hero animate-fade-rise" style="animation-delay:.4s" data-i18n="hero.explore">Explore my world</a>
-    <span id="explore-hint" class="hint-text" data-i18n="hero.exploreHint">scroll down!</span>
-  </div>
-  <div class="hero-scroll-hint"><div class="scroll-line"></div></div>
-</section>
-
-<!-- ══ ABOUT ══ -->
-<section id="about" class="content-sec">
-  <video class="sec-video parallax-bg" data-src="./videos/about.mp4" data-src-sd="./videos/about-mobile.mp4" preload="none" loop muted playsinline></video>
-  <div class="sec-overlay" style="background:linear-gradient(to right,rgba(26,20,16,0.88) 0%,rgba(26,20,16,0.6) 60%,rgba(26,20,16,0.35) 100%);"></div>
-  <div class="sec-inner">
-    <div class="sec-label fade-in" data-i18n="about.label">Who am I</div>
-    <div class="sec-title fade-in" data-i18n="about.title">A little about me</div>
-    <p class="sec-sub fade-in" data-i18n="about.sub">Authentic, a little weird, always building something.</p>
-    <div class="about-grid fade-in">
-      <div class="about-card glass"><div class="ico">🎓</div><h3 data-i18n="about.card1.title">IB Freshman, Saigon University</h3><p data-i18n="about.card1.body">Studying International Business in HCMC, class DKQ1252. Learning how the world does business — and why culture is everything.</p></div>
-      <div class="about-card glass"><div class="ico">🌐</div><h3 data-i18n="about.card2.title">Builder &amp; Entrepreneur</h3><p data-i18n="about.card2.body">Shipping projects while still in school — comics, websites, platforms. I build things before I fully know how.(with the help of ai) That's the point( i'm still learning the funamendal though).</p></div>
-      <div class="about-card glass"><div class="ico">🎵</div><h3 data-i18n="about.card3.title">Music + Movies + Vibes</h3><p data-i18n="about.card3.body">Big music person. Goated movie taste. Gym at 6 PM, café for everything else. Introverted (I'm trying not to be).</p></div>
-    </div>
-    <div class="lang-row fade-in">
-      <span class="lang">🇻🇳 Vietnamese</span>
-      <span class="lang">🇺🇸 English</span>
-      <span class="lang" data-i18n="about.spanish">🇪🇸 Spanish (learning)</span>
-    </div>
-    <div class="pills fade-in" style="margin-top:1.1rem;">
-      <span class="pill" data-i18n="about.pill1">🏋️ gym @ 6pm daily</span>
-      <span class="pill" data-i18n="about.pill2">☕ café worker bee</span>
-      <span class="pill" data-i18n="about.pill3">🎬 certified film nerd</span>
-      <span class="pill" data-i18n="about.pill4">🎵 music obsessed</span>
-      <span class="pill" data-i18n="about.pill5">✨ does weird stuff proudly</span>
-      <span class="pill" data-i18n="about.pill6">📖 lore enthusiast</span>
-      <span class="pill" data-i18n="about.pill7">🤖 learning json</span>
-    </div>
-  </div>
-</section>
-
-<!-- ══ PROJECTS ══ -->
-<section id="projects" class="content-sec">
-  <video class="sec-video" data-src="./videos/projects.mp4" data-src-sd="./videos/projects-mobile.mp4" preload="none" loop muted playsinline></video>
-  <div class="sec-overlay" style="background:linear-gradient(to bottom,rgba(18,14,10,0.75) 0%,rgba(26,20,16,0.6) 50%,rgba(18,14,10,0.8) 100%);"></div>
-  <div class="sec-inner">
-    <div class="sec-label fade-in center" data-i18n="projects.label">My work</div>
-    <div class="sec-title fade-in center" data-i18n="projects.title">Projects</div>
-    <p class="sec-sub fade-in center" data-i18n="projects.sub">Comics, platforms, and a multiverse or two.</p>
-    <div class="projects-grid fade-in">
-      <div class="proj-card glass" style="position:relative;">
-        <div class="proj-glow" style="background:radial-gradient(circle at 50% 0%,rgba(232,164,74,0.08),transparent 70%);"></div>
-        <div class="proj-thumb t1">📓<span class="sbadge done" data-i18n="badge.done">✓ Completed</span></div>
-        <div class="proj-body">
-          <div class="proj-cat" data-i18n="proj1.cat">Comic Book</div>
-          <h3>Sketchs</h3>
-          <p data-i18n="proj1.desc">40 pages. A quiet homo love story, a bit cringe(a lot). My first completed photorealistic comic — it has pages, a cover, and a soul.i have some more similar stories i wrote in highschool ready to develop too, and i'll do it. </p>
-          <p class="proj-credit" data-i18n="proj1.credit">Made with Nano Banana2, claude, me ( i have the secret recipe, you won't find it anywhere cause no one actually make it nowadays).</p>
-          <div class="proj-tags"><span class="ptag">Comic</span><span class="ptag" data-i18n="tag.origip">Original IP</span><span class="ptag" data-i18n="tag.completed">Completed</span></div>
+    <!-- ══ NAV ══ -->
+    <nav class="cinema-nav" id="main-nav">
+        <div class="cinema-logo">Hieu<sup>®</sup></div>
+        <div class="cinema-nav-links">
+            <a href="#hero" class="active" data-i18n="nav.home">Home</a>
+            <a href="#about" data-i18n="nav.about">About</a>
+            <a href="#projects" data-i18n="nav.projects">Projects</a>
+            <a href="#feed" data-i18n="nav.feed">Feed</a>
+            <a href="#movies" data-i18n="nav.films">Films</a>
+            <a href="#music" data-i18n="nav.music">Music</a>
         </div>
-      </div>
-      <div class="proj-card glass" style="position:relative;">
-        <div class="proj-glow" style="background:radial-gradient(circle at 50% 0%,rgba(232,164,74,0.08),transparent 70%);"></div>
-        <div class="proj-thumb t2">🌑<span class="sbadge done" data-i18n="badge.done">⚡ Completed too</span></div>
-        <div class="proj-body">
-          <div class="proj-cat" data-i18n="proj2.cat">Comic Book + Novel</div>
-          <h3>The Rust</h3>
-          <p data-i18n="proj2.desc">the next realistic project made base on the framework i adopted from sketches production.</p>
-          <p class="proj-credit" data-i18n="proj2.credit">Made with Nano Banana2, claude, me.</p>
-          <div class="proj-tags"><span class="ptag">Comic</span><span class="ptag" data-i18n="tag.novel">Novel</span><span class="ptag">Multiverse</span></div>
+        <div class="nav-right">
+            <button id="music-toggle-btn" class="music-btn" title="Play music" aria-label="Toggle background music"><svg
+                    width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 2.5L11 1V8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <circle cx="3.5" cy="10" r="2" stroke="currentColor" stroke-width="1.2" />
+                    <circle cx="9.5" cy="8.5" r="2" stroke="currentColor" stroke-width="1.2" />
+                </svg></button>
+            <button id="lang-toggle-btn" class="lang-toggle" title="Switch language">
+                <span class="label" id="lang-label">Switch to</span>
+                <span class="flag-pill" id="lang-flag">🇻🇳 VI</span>
+            </button>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;">
+                <button id="say-hello-btn" class="glass cinema-cta-nav"
+                    style="border-radius:999px;padding:.5rem 1.3rem;font-size:.78rem;color:var(--text);cursor:none;"
+                    data-i18n="hero.sayHello">Say hello</button>
+                <span id="say-hello-hint" class="hint-text" data-i18n="hero.sayHelloHint">hello! really glad you're
+                    here!</span>
+            </div>
         </div>
-      </div>
-      <div class="proj-card glass" style="position:relative;">
-        <div class="proj-glow" style="background:radial-gradient(circle at 50% 0%,rgba(90,138,106,0.08),transparent 70%);"></div>
-        <div class="proj-thumb t3">🗣️<span class="sbadge lazy" data-i18n="badge.lazy">😴 In progress</span></div>
-        <div class="proj-body">
-          <div class="proj-cat" data-i18n="proj3.cat">EdTech / Business</div>
-          <h3>a part of IDOMA HUB</h3>
-          <p data-i18n="proj3.desc">English testing platform for Vietnamese learners. 5 learner archetypes, CEFR scoring, differentiated results. Building it. now i have the completed diagnostic site. </p>
-          <div class="proj-tags"><span class="ptag">EdTech</span><span class="ptag" data-i18n="tag.language">Language</span><span class="ptag">Startup</span></div>
+    </nav>
+
+    <!-- ══ HERO ══ -->
+    <section id="hero">
+        <video id="hero-video" loop muted playsinline
+            poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+            <source data-src="./videos/hero.mp4" data-src-sd="./videos/hero-mobile.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-grain"></div>
+        <div class="cinema-hero-body">
+            <div class="hero-eyebrow animate-fade-rise" data-i18n="hero.eyebrow">Nguyen Ba Hieu · Saigon</div>
+            <h1 class="animate-fade-rise" style="animation-delay:.1s" data-i18n="hero.title">Student. <em>Creator.</em>
+            </h1>
+            <p class="cinema-sub animate-fade-rise" style="animation-delay:.25s" data-i18n="hero.sub">Saigon-based,
+                self-taught in everything that matters, freshman in everything else.</p>
+            <a href="#about" id="explore-btn" class="glass cinema-cta-hero animate-fade-rise"
+                style="animation-delay:.4s" data-i18n="hero.explore">Explore my world</a>
+            <span id="explore-hint" class="hint-text" data-i18n="hero.exploreHint">scroll down!</span>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ FEED ══ -->
-<section id="feed" class="content-sec">
-  <video class="sec-video" data-src="./videos/feed.mp4" data-src-sd="./videos/feed-mobile.mp4" preload="none" loop muted playsinline></video>
-  <div class="sec-overlay" style="background:linear-gradient(to right,rgba(18,14,10,0.85) 0%,rgba(26,20,16,0.55) 100%);"></div>
-  <div class="sec-inner">
-    <div class="sec-label fade-in" data-i18n="feed.label">What I'm up to</div>
-    <div class="sec-title fade-in" data-i18n="feed.title">The Feed</div>
-    <p class="sec-sub fade-in" data-i18n="feed.sub">A running log of what I'm building, watching, listening to, and thinking about.</p>
-    <div class="feed-controls fade-in" id="feed-filters">
-      <span class="feed-filter active" data-filter="all">all</span>
-      <span class="feed-filter" data-filter="building">building</span>
-      <span class="feed-filter" data-filter="watching">watching</span>
-      <span class="feed-filter" data-filter="listening">listening</span>
-      <span class="feed-filter" data-filter="thinking">thinking</span>
-      <span class="feed-filter" data-filter="shipping">shipping</span>
-      <div class="feed-divider"></div>
-      <span class="feed-filter" data-filter="late night">late night</span>
-      <span class="feed-filter" data-filter="melancholy">melancholy</span>
-      <span class="feed-filter" data-filter="obsessing">obsessing</span>
-      <span class="feed-filter" data-filter="proud of this">proud of this</span>
-      <span class="feed-filter" data-filter="in progress">in progress</span>
-    </div>
-    <div class="feed-list fade-in" id="feed-list">
-      <div class="feed-empty" style="display:none;" id="feed-empty">nothing here with that filter — try another one.</div>
-    </div>
-  </div>
-</section>
-
- 
-<!-- ══ MOVIES ══ -->
-<section id="movies" class="content-sec">
-  <video class="sec-video" data-src="./videos/films.mp4" data-src-sd="" preload="none" loop muted playsinline></video>
-  <div class="sec-overlay" style="background:linear-gradient(to bottom,rgba(18,14,10,0.72) 0%,rgba(18,14,10,0.45) 50%,rgba(18,14,10,0.75) 100%);"></div>
-  <div class="sec-inner">
-    <div class="sec-label fade-in center" data-i18n="movies.label">Hieu's watchlist</div>
-    <div class="sec-title fade-in center" data-i18n="movies.title">My Movies</div>
-    <p class="sec-sub fade-in center" data-i18n="movies.sub">Films I love — and exactly why you should watch them too.</p>
-    <div class="media-grid fade-in">
-      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(135deg,#1a0a00,#5c2d00);background-image:url('https://i.imgur.com/nArYRG8.jpg');background-size:cover;background-position:center;"></div><div class="media-num">01</div><span class="media-year">1994</span></div><div class="media-body"><div class="media-sub">Wong Kar-wai</div><h3>Chungking Express</h3><p class="media-why" data-i18n="movie1.why">Two lonely cops, two missed connections, one city that pulses like a heartbeat. It makes you fall in love with sadness and neon lights simultaneously — pure 1990s Hong Kong vibe. I watched it for the first time while drunk.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.mood">Mood film</span><span class="mtag" data-i18n="mtag.urban">Urban poetry</span><span class="mtag" data-i18n="mtag.lonely">Loneliness</span></div></div></div>
-      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(135deg,#1a0820,#7a2060,#c45a20);background-image:url('https://media.giphy.com/media/l3vRaHTeHMH0fQ9fG/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;"></div><div class="media-num">02</div><span class="media-year">2016</span></div><div class="media-body"><div class="media-sub">Damien Chazelle</div><h3>La La Land</h3><p class="media-why" data-i18n="movie2.why">For someone who has a lot of dreams — this film about chasing them at the cost of comfort was made for you. Bittersweet and beautiful. I remember every quote except I'm not.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.dreams">Dreams</span><span class="mtag" data-i18n="mtag.music">Music</span><span class="mtag" data-i18n="mtag.bittersweet">Bittersweet</span></div></div></div>
-      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(160deg,#2a1800,#8a5a10,#e8a840);background-image:url('https://media.giphy.com/media/l4EpbyFTmfogjyA3m/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;"></div><div class="media-num">03</div><span class="media-year">2017</span></div><div class="media-body"><div class="media-sub">Luca Guadagnino</div><h3>Call Me by Your Name</h3><p class="media-why" data-i18n="movie3.why">A golden, aching summer that rewires you completely. The authenticity you value bleeds out of every frame. The score alone will haunt you for weeks.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.authentic">Authentic</span><span class="mtag" data-i18n="mtag.sensory">Sensory</span><span class="mtag" data-i18n="mtag.coming">Coming of age</span></div></div></div>
-      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(135deg,#00101a,#003d5c,#006080);background-image:url('https://media.giphy.com/media/3o72F6A3rtzW6p4joQ/giphy.gif');background-size:cover;background-position:center;"></div><div class="media-num">04</div><span class="media-year">1997</span></div><div class="media-body"><div class="media-sub">Wong Kar-wai</div><h3>Happy Together</h3><p class="media-why" data-i18n="movie4.why">Two people pulling apart in Buenos Aires. Beautifully shot, emotionally devastating. If Chungking Express hit you, this one will wreck you — in the best way.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.heartbreak">Heartbreak</span><span class="mtag" data-i18n="mtag.identity">Identity</span><span class="mtag" data-i18n="mtag.visual">Visual poetry</span></div></div></div>
-      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(135deg,#1a1000,#5c4500);background-image:url('https://causewayfilms.com.au/media/pages/films/of-an-age/e0880f4246-1658816717/16a3865-1920x1080-crop-81-58.jpg');background-size:cover;background-position:center;"></div><div class="media-num">05</div><span class="media-year">2023</span></div><div class="media-body"><div class="media-sub">Goran Stolevski</div><h3>Of an Age</h3><p class="media-why" data-i18n="movie5.why">One afternoon, one car ride, a conversation that changes everything. Raw and precisely 18 years old. You'll watch this and feel seen in a way that's almost uncomfortable.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.intimacy">Intimacy</span><span class="mtag" data-i18n="mtag.youth">Youth</span><span class="mtag" data-i18n="mtag.oneday">One day</span></div></div></div>
-      <div class="media-card glass"><div class="media-banner"><div class="media-banner-img" style="background:linear-gradient(160deg,#0a1200,#1e3a10,#4a7a28);background-image:url('https://media.giphy.com/media/3o6fIUVP0DJ7MYVb6E/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;"></div><div class="media-num">06</div><span class="media-year">2017</span></div><div class="media-body"><div class="media-sub">Francis Lee</div><h3>God's Own Country</h3><p class="media-why" data-i18n="movie6.why">Rough, quiet, and deeply human. No drama for drama's sake — just two people being real with each other. Authenticity in its purest, most unpolished form.</p><div class="media-tags"><span class="mtag" data-i18n="mtag.raw">Raw</span><span class="mtag" data-i18n="mtag.quiet">Quiet intensity</span><span class="mtag" data-i18n="mtag.human">Human</span></div></div></div>
-    </div>
-  </div>
-</section>
-<!-- ══ MUSIC ══ -->
-<section id="music" class="content-sec">
-  <video class="sec-video" data-src="./videos/music.mp4" data-src-sd="./videos/music-mobile.mp4" preload="none" loop muted playsinline></video>
-  <div class="sec-overlay" style="background:linear-gradient(160deg,rgba(26,20,16,0.82) 0%,rgba(18,14,10,0.55) 100%);"></div>
-  <div class="sec-inner">
-    <div class="sec-label fade-in center" data-i18n="music.label">Hieu's playlist</div>
-    <div class="sec-title fade-in center" data-i18n="music.title">My Artists</div>
-    <p class="sec-sub fade-in center" data-i18n="music.sub">The artists living rent-free in my head — and why they should live in yours too.</p>
-    <div class="media-grid fade-in">
-      <div class="media-card glass"><div class="media-banner a1"><div class="media-num">01</div><div class="vinyl"></div><span class="media-year" data-i18n="since.2010">Since 2010</span></div><div class="media-body"><div class="media-sub">Dream pop · Baroque pop · Sad girl cinema</div><h3>Lana Del Rey</h3><p class="media-why" data-i18n="artist1.why">She writes like someone who makes movies in their head — melancholic, cinematic, American mythology filtered through sadness and beauty. If you love Wong Kar-wai films, you already love Lana. Same melancholy, different medium. Funfact: I can sing all her songs!</p><div class="media-tags"><span class="mtag" data-i18n="atag.cinematic">Cinematic</span><span class="mtag" data-i18n="atag.nostalgic">Nostalgic</span><span class="mtag" data-i18n="atag.poetic">Poetic</span></div></div></div>
-      <div class="media-card glass"><div class="media-banner a2"><div class="media-num">02</div><div class="vinyl"></div><span class="media-year" data-i18n="since.2004">Since 2004</span></div><div class="media-body"><div class="media-sub">Pop punk · Alternative rock · Anthemic</div><h3>Paramore</h3><p class="media-why" data-i18n="artist2.why">Pure energy and emotional honesty — they've reinvented themselves multiple times without losing their core. The kind of band that hits differently depending on where you are in life. Perfect for gym at 6 PM.</p><div class="media-tags"><span class="mtag" data-i18n="atag.energy">High energy</span><span class="mtag" data-i18n="atag.emotional">Emotional</span><span class="mtag" data-i18n="atag.anthemic">Anthemic</span></div></div></div>
-      <div class="media-card glass"><div class="media-banner a3"><div class="media-num">03</div><div class="vinyl"></div><span class="media-year" data-i18n="since.2018">Since 2018</span></div><div class="media-body"><div class="media-sub">Post-rock · Avant-garde · Maximalist</div><h3>Black Country, New Road</h3><p class="media-why" data-i18n="artist3.why">Chaotic, literary, and completely unlike anything else. Their songs feel like reading a great novel — dense with meaning, always changing. I like Basketball Shoes the most!</p><div class="media-tags"><span class="mtag">Avant-garde</span><span class="mtag" data-i18n="atag.literary">Literary</span><span class="mtag" data-i18n="atag.complex">Complex</span></div></div></div>
-      <div class="media-card glass"><div class="media-banner a4"><div class="media-num">04</div><div class="vinyl"></div><span class="media-year" data-i18n="since.2002">Since 2002</span></div><div class="media-body"><div class="media-sub">Indie rock · Psych rock · Dry wit</div><h3>Arctic Monkeys</h3><p class="media-why" data-i18n="artist4.why">Alex Turner writes lyrics like a novelist — sharp, witty, loaded with imagery. Every album is a different world. A band that rewards you for paying attention. Start with <em>Humbug</em> if you haven't.</p><div class="media-tags"><span class="mtag" data-i18n="atag.story">Storytelling</span><span class="mtag" data-i18n="atag.sharp">Sharp lyrics</span><span class="mtag" data-i18n="atag.world">World-building</span></div></div></div>
-      <div class="media-card glass"><div class="media-banner a5"><div class="media-num">05</div><div class="vinyl"></div><span class="media-year" data-i18n="since.2010b">Since 2010</span></div><div class="media-body"><div class="media-sub">Art pop · Futurist · Otherworldly</div><h3>Grimes</h3><p class="media-why" data-i18n="artist5.why">She builds entirely new sonic universes from scratch. Weird, beautiful, futuristic, and completely uncompromising. Authentic in the most alien way possible. You respect that.</p><div class="media-tags"><span class="mtag" data-i18n="atag.universe">Universe-builder</span><span class="mtag" data-i18n="atag.futurist">Futurist</span><span class="mtag" data-i18n="atag.uncompromising">Uncompromising</span></div></div></div>
-    </div>
-    <div id="now-playing-wrap">
-      <a id="now-playing-widget" class="glass" href="https://open.spotify.com" target="_blank" rel="noopener">
-        <div id="np-art-wrap"><img id="np-art" src="" alt="album art"/><div id="np-vinyl"></div></div>
-        <div id="np-info">
-          <div id="np-status"><span id="np-bars"><span></span><span></span><span></span><span></span></span><span id="np-label">Offline</span></div>
-          <div id="np-title">Not listening right now</div>
-          <div id="np-artist">Last seen: Saigon, 6PM gym playlist</div>
-          <div id="np-progress-track"><div id="np-progress-fill"></div></div>
+        <div class="hero-scroll-hint">
+            <div class="scroll-line"></div>
         </div>
-      </a>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- ══ FOOTER ══ -->
-<footer id="contact">
-  <p data-i18n="footer.text">Made with <span class="heart">♥</span> somewhere between a lecture and the gym · Let's connect, Hieu.</p>
-  <div class="social-row">
-    <a class="social-btn" href="https://m.facebook.com/nguyenba.hieu.520">facebook</a>
-    <a class="social-btn" href="#" data-i18n="footer.social">Not gr*ndr</a>
-  </div>
-</footer>
+    <!-- ══ ABOUT ══ -->
+    <section id="about" class="content-sec">
+        <video class="sec-video parallax-bg" data-src="./videos/about.mp4" data-src-sd="./videos/about-mobile.mp4"
+            preload="none" loop muted playsinline></video>
+        <div class="sec-overlay"
+            style="background:linear-gradient(to right,rgba(26,20,16,0.88) 0%,rgba(26,20,16,0.6) 60%,rgba(26,20,16,0.35) 100%);">
+        </div>
+        <div class="sec-inner">
+            <div class="sec-label fade-in" data-i18n="about.label">Who am I</div>
+            <div class="sec-title fade-in" data-i18n="about.title">A little about me</div>
+            <p class="sec-sub fade-in" data-i18n="about.sub">Authentic, a little weird, always building something.</p>
+            <div class="about-grid fade-in">
+                <div class="about-card glass">
+                    <div class="ico">🎓</div>
+                    <h3 data-i18n="about.card1.title">IB Freshman, Saigon University</h3>
+                    <p data-i18n="about.card1.body">Studying International Business in HCMC, class DKQ1252. Learning how
+                        the world does business — and why culture is everything.</p>
+                </div>
+                <div class="about-card glass">
+                    <div class="ico">🌐</div>
+                    <h3 data-i18n="about.card2.title">Builder &amp; Entrepreneur</h3>
+                    <p data-i18n="about.card2.body">Shipping projects while still in school — comics, websites,
+                        platforms. I build things before I fully know how.(with the help of ai) That's the point( i'm
+                        still learning the funamendal though).</p>
+                </div>
+                <div class="about-card glass">
+                    <div class="ico">🎵</div>
+                    <h3 data-i18n="about.card3.title">Music + Movies + Vibes</h3>
+                    <p data-i18n="about.card3.body">Big music person. Goated movie taste. Gym at 6 PM, café for
+                        everything else. Introverted (I'm trying not to be).</p>
+                </div>
+            </div>
+            <div class="lang-row fade-in">
+                <span class="lang">🇻🇳 Vietnamese</span>
+                <span class="lang">🇺🇸 English</span>
+                <span class="lang" data-i18n="about.spanish">🇪🇸 Spanish (learning)</span>
+            </div>
+            <div class="pills fade-in" style="margin-top:1.1rem;">
+                <span class="pill" data-i18n="about.pill1">🏋️ gym @ 6pm daily</span>
+                <span class="pill" data-i18n="about.pill2">☕ café worker bee</span>
+                <span class="pill" data-i18n="about.pill3">🎬 certified film nerd</span>
+                <span class="pill" data-i18n="about.pill4">🎵 music obsessed</span>
+                <span class="pill" data-i18n="about.pill5">✨ does weird stuff proudly</span>
+                <span class="pill" data-i18n="about.pill6">📖 lore enthusiast</span>
+                <span class="pill" data-i18n="about.pill7">🤖 learning json</span>
+            </div>
+        </div>
+    </section>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// ══════════════════════════════════════
-// TRANSLATIONS
-// ══════════════════════════════════════
-const translations = {
-  en: {
-    "nav.home":"Home","nav.about":"About","nav.projects":"Projects","nav.feed":"Feed","nav.films":"Films","nav.music":"Music","nav.contact":"Contact",
-    "hero.eyebrow":"Nguyen Ba Hieu · Saigon",
-    "hero.sayHello":"Say hello","hero.sayHelloHint":"hello! really glad you're here!",
-    "hero.title":"Student. Creator.","hero.explore":"Explore my world","hero.exploreHint":"scroll down!",
-    "hero.sub":"Saigon-based, self-taught in everything that matters, freshman in everything else.",
-    "about.label":"Who am I","about.title":"A little about me","about.sub":"Authentic, a little weird, always building something.",
-    "about.card1.title":"IB Freshman, Saigon University","about.card1.body":"Studying International Business in HCMC, class DKQ1252. Learning how the world does business — and why culture is everything.",
-    "about.card2.title":"Builder & Entrepreneur","about.card2.body":"Shipping projects while still in school — comics, websites, platforms. I build things before I fully know how.(with the help of ai) That's the point( i'm still learning the funamendal though).",
-    "about.card3.title":"Music + Movies + Vibes","about.card3.body":"Big music person. Goated movie taste. Gym at 6 PM, café for everything else. Introverted (I'm trying not to be).",
-    "about.spanish":"🇪🇸 Spanish (learning)",
-    "about.pill1":"🏋️ gym @ 6pm daily","about.pill2":"☕ café worker bee","about.pill3":"🎬 certified film nerd","about.pill4":"🎵 music obsessed","about.pill5":"✨ does weird stuff proudly","about.pill6":"📖 lore enthusiast", "about.pill7":"🤖 learning json",
-    "projects.label":"My work","projects.title":"Projects","projects.sub":"Comics, platforms, and a multiverse or two.",
-    "badge.done":"✓ Completed","badge.ongoing":"⚡ Ongoing","badge.lazy":"😴 In progress",
-    "proj1.cat":"Comic Book","proj1.desc":"40 pages. A quiet homo love story, a bit cringe(a lot). My first completed photorealistic comic — it has pages, a cover, and a soul.i have some more similar stories i wrote in highschool ready to develop too, and i'll do it. ","proj1.credit":"Made with Nano Banana2, claude, me ( i have the secret recipe, you won't find it anywhere cause no one actually make it nowadays).",
-    "proj2.cat":"Comic Book + Novel","proj2.desc":"the next realistic project made base on the framework i adopted from sketches production. Now also completed.","proj2.credit":"Made with Nano Banana2, claude, me.",
-    "proj3.cat":"EdTech / Business","proj3.desc":"English testing platform for Vietnamese learners. 5 learner archetypes, CEFR scoring, differentiated results. Building it. now i have the completed diagnostic site. ",
-    "tag.origip":"Original IP","tag.completed":"Completed","tag.novel":"Novel","tag.language":"Language",
-    "feed.label":"What I'm up to","feed.title":"The Feed","feed.sub":"A running log of what I'm building, watching, listening to, and thinking about.",
-    "movies.label":"Hieu's watchlist","movies.title":"My Movies","movies.sub":"Films I love — and exactly why you should watch them too.",
-    "movie1.why":"Two lonely cops, two missed connections, one city that pulses like a heartbeat. It makes you fall in love with sadness and neon lights simultaneously — pure 1990s Hong Kong vibe. I watched it for the first time while drunk.",
-    "movie2.why":"For someone who has a lot of dreams — this film about chasing them at the cost of comfort was made for you. Bittersweet and beautiful. I remember every quote except I'm not.",
-    "movie3.why":"A golden, aching summer that rewires you completely. The authenticity you value bleeds out of every frame. The score alone will haunt you for weeks.",
-    "movie4.why":"Two people pulling apart in Buenos Aires. Beautifully shot, emotionally devastating. If Chungking Express hit you, this one will wreck you — in the best way.",
-    "movie5.why":"One afternoon, one car ride, a conversation that changes everything. Raw and precisely 18 years old. You'll watch this and feel seen in a way that's almost uncomfortable.",
-    "movie6.why":"Rough, quiet, and deeply human. No drama for drama's sake — just two people being real with each other. Authenticity in its purest, most unpolished form.",
-    "mtag.mood":"Mood film","mtag.urban":"Urban poetry","mtag.lonely":"Loneliness","mtag.dreams":"Dreams","mtag.music":"Music","mtag.bittersweet":"Bittersweet","mtag.authentic":"Authentic","mtag.sensory":"Sensory","mtag.coming":"Coming of age","mtag.heartbreak":"Heartbreak","mtag.identity":"Identity","mtag.visual":"Visual poetry","mtag.intimacy":"Intimacy","mtag.youth":"Youth","mtag.oneday":"One day","mtag.raw":"Raw","mtag.quiet":"Quiet intensity","mtag.human":"Human",
-    "music.label":"Hieu's playlist","music.title":"My Artists","music.sub":"The artists living rent-free in my head — and why they should live in yours too.",
-    "since.2010":"Since 2010","since.2004":"Since 2004","since.2018":"Since 2018","since.2002":"Since 2002","since.2010b":"Since 2010",
-    "artist1.why":"She writes like someone who makes movies in their head — melancholic, cinematic, American mythology filtered through sadness and beauty. If you love Wong Kar-wai films, you already love Lana. Same melancholy, different medium. Funfact: I can sing all her songs!",
-    "artist2.why":"Pure energy and emotional honesty — they've reinvented themselves multiple times without losing their core. The kind of band that hits differently depending on where you are in life. Perfect for gym at 6 PM.",
-    "artist3.why":"Chaotic, literary, and completely unlike anything else. Their songs feel like reading a great novel — dense with meaning, always changing. I like Basketball Shoes the most!",
-    "artist4.why":"Alex Turner writes lyrics like a novelist — sharp, witty, loaded with imagery. Every album is a different world. A band that rewards you for paying attention. Start with <em>Humbug</em> if you haven't.",
-    "artist5.why":"She builds entirely new sonic universes from scratch. Weird, beautiful, futuristic, and completely uncompromising. Authentic in the most alien way possible. You respect that.",
-    "atag.cinematic":"Cinematic","atag.nostalgic":"Nostalgic","atag.poetic":"Poetic","atag.energy":"High energy","atag.emotional":"Emotional","atag.anthemic":"Anthemic","atag.literary":"Literary","atag.complex":"Complex","atag.story":"Storytelling","atag.sharp":"Sharp lyrics","atag.world":"World-building","atag.universe":"Universe-builder","atag.futurist":"Futurist","atag.uncompromising":"Uncompromising",
-    "footer.text":"Made with ♥ somewhere between a lecture and the gym · Let's connect, Hieu.",
-    "footer.social":"Not gr*ndr"
-  },
-  vi: {
-    "nav.home":"Trang chủ","nav.about":"Về mình","nav.projects":"Dự án","nav.feed":"Nhật ký","nav.films":"Phim","nav.music":"Nhạc","nav.contact":"Liên hệ",
-    "hero.eyebrow":"Nguyễn Bá Hiếu · Sài Gòn",
-    "hero.sayHello":"Chào bạn 👋","hero.sayHelloHint":"chào bạn! rất vui vì bạn ghé thăm!",
-    "hero.title":"Sinh viên. Người sáng tạo.","hero.explore":"Khám phá thế giới của mình 🌍","hero.exploreHint":"cuộn xuống xem nhé!",
-    "hero.sub":"Sinh ra ở Sài Gòn, tự học mọi thứ quan trọng, tân sinh viên trong mọi thứ còn lại.",
-    "about.label":"Mình là ai","about.title":"Đôi nét về mình","about.sub":"Chân thật, hơi lạ một chút, luôn luôn đang xây dựng thứ gì đó.",
-    "about.card1.title":"Sinh viên năm nhất, ĐH Sài Gòn","about.card1.body":"Học Kinh doanh Quốc tế tại TP.HCM, lớp DKQ1252. Đang tìm hiểu xem thế giới làm ăn như thế nào — và tại sao văn hoá mới là yếu tố quyết định.",
-    "about.card2.title":"Builder & Khởi nghiệp","about.card2.body":"Xây dựng dự án liên tục song song với việc học trên trường — truyện tranh, website, nền tảng. Mình bắt tay vào làm trước cả khi biết chính xác phải làm thế nào (với sự hỗ trợ của AI). Đó mới là điều thú vị (tất nhiên mình vẫn đang củng cố lại kiến thức nền tảng).",
-    "about.card3.title":"Nhạc + Phim + Vibe","about.card3.body":"Nghiện nhạc nặng. Gu phim ổn. Tập gym lúc 6h tối, thời gian còn lại thì gắn liền với quán cà phê. Hướng nội (nhưng đang cố khắc phục).",
-    "about.spanish":"🇪🇸 Tiếng Tây Ban Nha (đang học)",
-    "about.pill1":"🏋️ gym lúc 6h tối mỗi ngày","about.pill2":"☕ cư dân quán cà phê","about.pill3":"🎬 mọt phim chính hiệu","about.pill4":"🎵 đam mê âm nhạc","about.pill5":"✨ tự hào với sự đặcv biệt của mình","about.pill6":"📖 đam mê bối cảnh truyện","about.pill7":"🤖 đang vọc vạch json",
-    "projects.label":"Công việc của mình","projects.title":"Các dự án","projects.sub":"Truyện tranh, những dự án nền tảng, và đôi ba vũ trụ song song.",
-    "badge.done":"✓ Hoàn thành","badge.ongoing":"⚡ Đang làm","badge.lazy":"😴 Đang tiến hành",
-    "proj1.cat":"Truyện tranh","proj1.desc":"40 trang. Một câu chuyện tình yêu nhẹ nhàng. Cuốn truyện tranh chân thực đầu tiên mà mình hoàn thành — có số trang đàng hoàng, có bìa, và có chiều sâu. Mình vẫn còn vài kịch bản tương tự hồi cấp 3 đã sẵn sàng, và mình sẽ triển khai.","proj1.credit":"Được tạo ra cùng Nano Banana2, Claude, và bản thân mình (đây là công thức bí mật, khó mà tìm thấy ở đâu khác).",
-    "proj2.cat":"Truyện tranh + Tiểu thuyết","proj2.desc":"Dự án phong cách chân thực tiếp theo được xây dựng dựa trên quy trình mà mình áp dụng từ bộ Sketches. Bây giờ cũng đã hoàn thành.","proj2.credit":"Được tạo ra cùng Nano Banana2, Claude và mình.",
-    "proj3.cat":"EdTech / Kinh doanh","proj3.desc":"Nền tảng kiểm tra tiếng Anh dành cho người Việt. Phân loại 5 nhóm người học, chấm điểm theo chuẩn CEFR, kết quả được phân tích chi tiết. Mình đang trong quá trình xây dựng, hiện tại đã hoàn thiện giao diện phần chẩn đoán.",
-    "tag.origip":"IP gốc","tag.completed":"Hoàn thành","tag.novel":"Tiểu thuyết","tag.language":"Ngôn ngữ",
-    "feed.label":"Mình đang làm gì","feed.title":"Dòng thời gian","feed.sub":"Ghi chép về những thứ mình đang phát triển, xem, nghe, và trăn trở.",
-    "movies.label":"Danh sách phim của Hiếu","movies.title":"Những bộ phim yêu thích","movies.sub":"Những tác phẩm mình cực kỳ yêu thích — và lý do tại sao bạn cũng nên thử xem qua.",
-    "movie1.why":"Hai anh cảnh sát cô đơn, hai cuộc gặp gỡ lỡ hẹn, một thành phố nhịp đập liên hồi. Phim khiến bạn yêu luôn cảm giác rầu rĩ lẫn những ánh đèn neon nhòe nhoẹt. Thú thật là mình lần đầu xem bộ này lúc đang hơi say.",
-    "movie2.why":"Dành cho những ai ấp ủ nhiều ước mơ — bộ phim về hành trình theo đuổi đam mê và cái giá của sự đánh đổi sinh ra là dành cho bạn. Nuối tiếc nhưng đẹp đẽ. Mình thậm chí thuộc lòng không sót câu thoại nào, à mà có vẻ như mình hơi phóng đại một chút.",
-    "movie3.why":"Một mùa hè sôi động nhưng day dứt, đủ để làm thế giới quan của bạn đổi thay. Sự chân thực hiện diện trọn vẹn qua từng khung hình. Chỉ riêng phần nhạc phim thôi cũng đã có độ ám ảnh khó quên.",
-    "movie4.why":"Hai người dường như ngày càng xa cách tại vùng đất Buenos Aires. Góc máy đẹp tuyệt vời, nhưng xúc cảm thì quá đỗi nặng nề. Nếu Chungking Express làm bạn nghẹn ngào, thì phần phim này sẽ để lại vết xước trong bạn — theo một cách hoàn mỹ nhất.",
-    "movie5.why":"Một chiều muộn, một chuyến hành trình, và cuộc đối thoại đã thay đổi toàn bộ góc nhìn. Chất liệu thô ráp và đượm đà màu sắc tuổi 18 mãnh liệt. Đảm bảo khi xem bạn cũng sẽ thoáng thấy mình trong đó.",
-    "movie6.why":"Một tác phẩm thô ráp, tĩnh lặng và mộc mạc tính con người. Hoàn toàn thiếu vắng các câu chuyện bị đẩy lên khiên cưỡng — chỉ đơn giản là hai tâm hồn sống thật cùng nhau. Giá trị chân thật được ưu tiên ở trạng thái bản nguyên nhất.",
-    "mtag.mood":"Phim cảm xúc","mtag.urban":"Thơ ca đô thị","mtag.lonely":"Sự cô đơn","mtag.dreams":"Bản tình ca ước mơ","mtag.music":"Yêu nhạc","mtag.bittersweet":"Nuối tiếc và lãng mạn","mtag.authentic":"Đời thường","mtag.sensory":"Tác động cảm giác","mtag.coming":"Chuyến đi tuổi trẻ","mtag.heartbreak":"Đau đáu","mtag.identity":"Định dạng bản sắc","mtag.visual":"Cái đẹp thị giác","mtag.intimacy":"Gần gũi và sâu sắc","mtag.youth":"Cơn lốc tuổi trẻ","mtag.oneday":"Khoảnh khắc","mtag.raw":"Chân thật mộc mạc","mtag.quiet":"Vẻ trầm ngâm","mtag.human":"Tinh thần nhân văn",
-    "music.label":"Playlist của Hiếu","music.title":"Giới nghệ sĩ nổi bật","music.sub":"Những cái tên vẫn chưa lúc nào ngừng văng vẳng trong tiềm thức — và bạn cũng nên thử nghe một lần.",
-    "since.2010":"Khởi đầu từ 2010","since.2004":"Bắt đầu năm 2004","since.2018":"Ra mắt từ 2018","since.2002":"Hành trình từ 2002","since.2010b":"Xuất hiện từ 2010",
-    "artist1.why":"Cô ấy viết âm nhạc dường như đem cả thước phim vào suy nghĩ — đượm nét u hoài, như màn bạc đầy tâm trạng, phác họa hình ảnh nước Mỹ thông qua chất lãng tử của cái đẹp và màn sương hoài niệm. Nếu bạn đồng điệu cùng phong cách của tác giả Wong Kar-wai, hãy nghe thử Lana nha. Niềm vui nho nhỏ là mình biết mặt hát hệt mọi bài của cô.",
-    "artist2.why":"Mang đúng năng lượng thuần khiết và sự thành thật chạm vào xúc cảm — ban nhạc đã liên tục chuyển mình nhưng vẫn níu lại chất lôi cuốn ban đầu. Một dòng nhạc thấm thía đến từng nhịp thở cho dù bạn đang ở khoảng trầm bổng nào. Tuyệt hảo cho các buổi đi tập cơ hằng chiều tối.",
-    "artist3.why":"Pha trộn hỗn loạn, tràn ngập nghệ thuật ngôn từ và đi ngược lại công thức đại trà. Nghe nhạc hệt như bạn lật giở những cuốn truyện tiểu thuyết ngập tràn tâm thái — luôn có sự biến ảo trong đó. Đoạn hát yêu thích của mình phải kể tới Basketball Shoes.",
-    "artist4.why":"Alex Turner gieo vần sắc cạnh tựa văn sĩ chuyên nghiệp — thông minh, chất thơ và lôi cuốn bằng đa dạng lối mường tượng. Mỗi một quyển album thả trọn ra các vũ trụ không đụng lặp. Nếu chưa từng thử qua nhạc của họ, hãy chạy qua Humbug một chút xem sao.",
-    "artist5.why":"Nữ ca sĩ này đã độc lập vận hành cho bản thân hệ hình tượng âm thanh từ thời mông muội. Đậm sự lạ lùng, đẹp cứng cỏi, rẽ hướng tiên phong thế kỉ mới một cách can trường. Sự kỳ dị mà nhất định bạn có thể gật gù khen gợi.",
-    "atag.cinematic":"Chất rạp phim","atag.nostalgic":"Hoài niệm xa xôi","atag.poetic":"Đầy chất thơ","atag.energy":"Thực lực bùng nổ","atag.emotional":"Gia vị cảm xúc","atag.anthemic":"Anthemic","atag.literary":"Phong thái ngữ văn","atag.complex":"Đầy chiêm nghiệm","atag.story":"Lối kể đặc thù","atag.sharp":"Ca từ sắc nhọn","atag.world":"Tái tạo thế giới","atag.universe":"Lập nên vũ trụ nhạc","atag.futurist":"Nguồn sáng tương lai","atag.uncompromising":"Hoàn toàn giữ vững lập trường",
-    "footer.text":"Được viết bằng ♥ đâu đó giữa giờ đến lớp và giờ ra phòng tập · Kết nối với Hiếu nhé.",
-    "footer.social":"Không phải gr*ndr đâu nha"
-  }
-};
+    <!-- ══ PROJECTS ══ -->
+    <section id="projects" class="content-sec">
+        <video class="sec-video" data-src="./videos/projects.mp4" data-src-sd="./videos/projects-mobile.mp4"
+            preload="none" loop muted playsinline></video>
+        <div class="sec-overlay"
+            style="background:linear-gradient(to bottom,rgba(18,14,10,0.75) 0%,rgba(26,20,16,0.6) 50%,rgba(18,14,10,0.8) 100%);">
+        </div>
+        <div class="sec-inner">
+            <div class="sec-label fade-in center" data-i18n="projects.label">My work</div>
+            <div class="sec-title fade-in center" data-i18n="projects.title">Projects</div>
+            <p class="sec-sub fade-in center" data-i18n="projects.sub">Comics, platforms, and a multiverse or two.</p>
+            <div class="projects-grid fade-in">
+                <div class="proj-card glass" style="position:relative;">
+                    <div class="proj-glow"
+                        style="background:radial-gradient(circle at 50% 0%,rgba(232,164,74,0.08),transparent 70%);">
+                    </div>
+                    <div class="proj-thumb t1">📓<span class="sbadge done" data-i18n="badge.done">✓ Completed</span>
+                    </div>
+                    <div class="proj-body">
+                        <div class="proj-cat" data-i18n="proj1.cat">Comic Book</div>
+                        <h3>Sketchs</h3>
+                        <p data-i18n="proj1.desc">40 pages. A quiet homo love story, a bit cringe(a lot). My first
+                            completed photorealistic comic — it has pages, a cover, and a soul.i have some more similar
+                            stories i wrote in highschool ready to develop too, and i'll do it. </p>
+                        <p class="proj-credit" data-i18n="proj1.credit">Made with Nano Banana2, claude, me ( i have the
+                            secret recipe, you won't find it anywhere cause no one actually make it nowadays).</p>
+                        <div class="proj-tags"><span class="ptag">Comic</span><span class="ptag"
+                                data-i18n="tag.origip">Original IP</span><span class="ptag"
+                                data-i18n="tag.completed">Completed</span></div>
+                    </div>
+                </div>
+                <div class="proj-card glass" style="position:relative;">
+                    <div class="proj-glow"
+                        style="background:radial-gradient(circle at 50% 0%,rgba(232,164,74,0.08),transparent 70%);">
+                    </div>
+                    <div class="proj-thumb t2">🌑<span class="sbadge done" data-i18n="badge.done">⚡ Completed too</span>
+                    </div>
+                    <div class="proj-body">
+                        <div class="proj-cat" data-i18n="proj2.cat">Comic Book + Novel</div>
+                        <h3>The Rust</h3>
+                        <p data-i18n="proj2.desc">the next realistic project made base on the framework i adopted from
+                            sketches production.</p>
+                        <p class="proj-credit" data-i18n="proj2.credit">Made with Nano Banana2, claude, me.</p>
+                        <div class="proj-tags"><span class="ptag">Comic</span><span class="ptag"
+                                data-i18n="tag.novel">Novel</span><span class="ptag">Multiverse</span></div>
+                    </div>
+                </div>
+                <div class="proj-card glass" style="position:relative;">
+                    <div class="proj-glow"
+                        style="background:radial-gradient(circle at 50% 0%,rgba(90,138,106,0.08),transparent 70%);">
+                    </div>
+                    <div class="proj-thumb t3">🗣️<span class="sbadge lazy" data-i18n="badge.lazy">😴 In progress</span>
+                    </div>
+                    <div class="proj-body">
+                        <div class="proj-cat" data-i18n="proj3.cat">EdTech / Business</div>
+                        <h3>a part of IDOMA HUB</h3>
+                        <p data-i18n="proj3.desc">English testing platform for Vietnamese learners. 5 learner
+                            archetypes, CEFR scoring, differentiated results. Building it. now i have the completed
+                            diagnostic site. </p>
+                        <div class="proj-tags"><span class="ptag">EdTech</span><span class="ptag"
+                                data-i18n="tag.language">Language</span><span class="ptag">Startup</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-// ══════════════════════════════════════
-// LANGUAGE SWITCHER
-// ══════════════════════════════════════
-let currentLang = 'en';
-function applyLanguage(lang) {
-  document.querySelectorAll('[data-i18n]').forEach(el => el.classList.add('switching'));
-  setTimeout(() => {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      const text = translations[lang][key];
-      if (text !== undefined) el.innerHTML = text;
-    });
-    if (lang === 'en') {
-      document.querySelector('[data-i18n="footer.text"]').innerHTML = 'Made with <span class="heart">♥</span> somewhere between a lecture and the gym · Let\'s connect, Hieu.';
-    } else {
-      document.querySelector('[data-i18n="footer.text"]').innerHTML = 'Được viết bằng <span class="heart">♥</span> đâu đó giữa giờ đến lớp và giờ ra phòng tập · Kết nối với Hiếu nhé.';
-    }
-    document.documentElement.lang = lang;
-    document.querySelectorAll('[data-i18n]').forEach(el => el.classList.remove('switching'));
-  }, 180);
-}
-document.getElementById('lang-toggle-btn').addEventListener('click', () => {
-  currentLang = currentLang === 'en' ? 'vi' : 'en';
-  applyLanguage(currentLang);
-  document.getElementById('lang-flag').textContent = currentLang === 'vi' ? '🇺🇸 EN' : '🇻🇳 VI';
-  document.getElementById('lang-label').textContent = 'Switch to';
-});
+    <!-- ══ FEED ══ -->
+    <section id="feed" class="content-sec">
+        <video class="sec-video" data-src="./videos/feed.mp4" data-src-sd="./videos/feed-mobile.mp4" preload="none" loop
+            muted playsinline></video>
+        <div class="sec-overlay"
+            style="background:linear-gradient(to right,rgba(18,14,10,0.85) 0%,rgba(26,20,16,0.55) 100%);"></div>
+        <div class="sec-inner">
+            <div class="sec-label fade-in" data-i18n="feed.label">What I'm up to</div>
+            <div class="sec-title fade-in" data-i18n="feed.title">The Feed</div>
+            <p class="sec-sub fade-in" data-i18n="feed.sub">A running log of what I'm building, watching, listening to,
+                and thinking about.</p>
+            <div class="feed-controls fade-in" id="feed-filters">
+                <span class="feed-filter active" data-filter="all">all</span>
+                <span class="feed-filter" data-filter="building">building</span>
+                <span class="feed-filter" data-filter="watching">watching</span>
+                <span class="feed-filter" data-filter="listening">listening</span>
+                <span class="feed-filter" data-filter="thinking">thinking</span>
+                <span class="feed-filter" data-filter="shipping">shipping</span>
+                <div class="feed-divider"></div>
+                <span class="feed-filter" data-filter="late night">late night</span>
+                <span class="feed-filter" data-filter="melancholy">melancholy</span>
+                <span class="feed-filter" data-filter="obsessing">obsessing</span>
+                <span class="feed-filter" data-filter="proud of this">proud of this</span>
+                <span class="feed-filter" data-filter="in progress">in progress</span>
+            </div>
+            <div class="feed-list fade-in" id="feed-list">
+                <div class="feed-empty" style="display:none;" id="feed-empty">nothing here with that filter — try
+                    another one.</div>
+            </div>
+        </div>
+    </section>
 
-// ══════════════════════════════════════
-// CUSTOM CURSOR
-// ══════════════════════════════════════
-(function() {
-  const dot = document.getElementById('cur-dot');
-  const ring = document.getElementById('cur-ring');
-  if (!dot || !ring) return;
-  let mx=-100,my=-100,rx=-100,ry=-100;
-  document.addEventListener('mousemove', e => {
-    mx=e.clientX; my=e.clientY;
-    dot.style.left=mx+'px'; dot.style.top=my+'px';
-  });
-  (function loop(){
-    rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
-    ring.style.left=rx+'px'; ring.style.top=ry+'px';
-    requestAnimationFrame(loop);
-  })();
-  document.querySelectorAll('a,.media-card,.proj-card,.about-card,.feed-entry').forEach(el => {
-    el.addEventListener('mouseenter',()=>document.body.classList.add('cur-gold'));
-    el.addEventListener('mouseleave',()=>document.body.classList.remove('cur-gold'));
-  });
-  document.querySelectorAll('button,.feed-filter,.pill').forEach(el => {
-    el.addEventListener('mouseenter',()=>document.body.classList.add('cur-btn'));
-    el.addEventListener('mouseleave',()=>document.body.classList.remove('cur-btn'));
-  });
-})();
 
-// ══════════════════════════════════════
-// ══════════════════════════════════════
-// VIDEO SYSTEM — SMART LOADING
-// one video plays at a time, pause when offscreen,
-// load only when section is near viewport
-// ══════════════════════════════════════
-const isMobile = window.matchMedia('(max-width:767px)').matches;
+    <!-- ══ MOVIES ══ -->
+    <section id="movies" class="content-sec">
+        <video class="sec-video" data-src="./videos/films.mp4" data-src-sd="./videos/films-mobile.mp4" preload="none"
+            loop muted playsinline></video>
+        <div class="sec-overlay"
+            style="background:linear-gradient(to bottom,rgba(18,14,10,0.72) 0%,rgba(18,14,10,0.45) 50%,rgba(18,14,10,0.75) 100%);">
+        </div>
+        <div class="sec-inner">
+            <div class="sec-label fade-in center" data-i18n="movies.label">Hieu's watchlist</div>
+            <div class="sec-title fade-in center" data-i18n="movies.title">My Movies</div>
+            <p class="sec-sub fade-in center" data-i18n="movies.sub">Films I love — and exactly why you should watch
+                them too.</p>
+            <div class="media-grid fade-in">
+                <div class="media-card glass">
+                    <div class="media-banner">
+                        <div class="media-banner-img"
+                            style="background:linear-gradient(135deg,#1a0a00,#5c2d00);background-image:url('https://i.imgur.com/nArYRG8.jpg');background-size:cover;background-position:center;">
+                        </div>
+                        <div class="media-num">01</div><span class="media-year">1994</span>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-sub">Wong Kar-wai</div>
+                        <h3>Chungking Express</h3>
+                        <p class="media-why" data-i18n="movie1.why">Two lonely cops, two missed connections, one city
+                            that pulses like a heartbeat. It makes you fall in love with sadness and neon lights
+                            simultaneously — pure 1990s Hong Kong vibe. I watched it for the first time while drunk.</p>
+                        <div class="media-tags"><span class="mtag" data-i18n="mtag.mood">Mood film</span><span
+                                class="mtag" data-i18n="mtag.urban">Urban poetry</span><span class="mtag"
+                                data-i18n="mtag.lonely">Loneliness</span></div>
+                    </div>
+                </div>
+                <div class="media-card glass">
+                    <div class="media-banner">
+                        <div class="media-banner-img"
+                            style="background:linear-gradient(135deg,#1a0820,#7a2060,#c45a20);background-image:url('https://media.giphy.com/media/l3vRaHTeHMH0fQ9fG/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;">
+                        </div>
+                        <div class="media-num">02</div><span class="media-year">2016</span>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-sub">Damien Chazelle</div>
+                        <h3>La La Land</h3>
+                        <p class="media-why" data-i18n="movie2.why">For someone who has a lot of dreams — this film
+                            about chasing them at the cost of comfort was made for you. Bittersweet and beautiful. I
+                            remember every quote except I'm not.</p>
+                        <div class="media-tags"><span class="mtag" data-i18n="mtag.dreams">Dreams</span><span
+                                class="mtag" data-i18n="mtag.music">Music</span><span class="mtag"
+                                data-i18n="mtag.bittersweet">Bittersweet</span></div>
+                    </div>
+                </div>
+                <div class="media-card glass">
+                    <div class="media-banner">
+                        <div class="media-banner-img"
+                            style="background:linear-gradient(160deg,#2a1800,#8a5a10,#e8a840);background-image:url('https://media.giphy.com/media/l4EpbyFTmfogjyA3m/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;">
+                        </div>
+                        <div class="media-num">03</div><span class="media-year">2017</span>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-sub">Luca Guadagnino</div>
+                        <h3>Call Me by Your Name</h3>
+                        <p class="media-why" data-i18n="movie3.why">A golden, aching summer that rewires you completely.
+                            The authenticity you value bleeds out of every frame. The score alone will haunt you for
+                            weeks.</p>
+                        <div class="media-tags"><span class="mtag" data-i18n="mtag.authentic">Authentic</span><span
+                                class="mtag" data-i18n="mtag.sensory">Sensory</span><span class="mtag"
+                                data-i18n="mtag.coming">Coming of age</span></div>
+                    </div>
+                </div>
+                <div class="media-card glass">
+                    <div class="media-banner">
+                        <div class="media-banner-img"
+                            style="background:linear-gradient(135deg,#00101a,#003d5c,#006080);background-image:url('https://media.giphy.com/media/3o72F6A3rtzW6p4joQ/giphy.gif');background-size:cover;background-position:center;">
+                        </div>
+                        <div class="media-num">04</div><span class="media-year">1997</span>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-sub">Wong Kar-wai</div>
+                        <h3>Happy Together</h3>
+                        <p class="media-why" data-i18n="movie4.why">Two people pulling apart in Buenos Aires.
+                            Beautifully shot, emotionally devastating. If Chungking Express hit you, this one will wreck
+                            you — in the best way.</p>
+                        <div class="media-tags"><span class="mtag" data-i18n="mtag.heartbreak">Heartbreak</span><span
+                                class="mtag" data-i18n="mtag.identity">Identity</span><span class="mtag"
+                                data-i18n="mtag.visual">Visual poetry</span></div>
+                    </div>
+                </div>
+                <div class="media-card glass">
+                    <div class="media-banner">
+                        <div class="media-banner-img"
+                            style="background:linear-gradient(135deg,#1a1000,#5c4500);background-image:url('https://causewayfilms.com.au/media/pages/films/of-an-age/e0880f4246-1658816717/16a3865-1920x1080-crop-81-58.jpg');background-size:cover;background-position:center;">
+                        </div>
+                        <div class="media-num">05</div><span class="media-year">2023</span>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-sub">Goran Stolevski</div>
+                        <h3>Of an Age</h3>
+                        <p class="media-why" data-i18n="movie5.why">One afternoon, one car ride, a conversation that
+                            changes everything. Raw and precisely 18 years old. You'll watch this and feel seen in a way
+                            that's almost uncomfortable.</p>
+                        <div class="media-tags"><span class="mtag" data-i18n="mtag.intimacy">Intimacy</span><span
+                                class="mtag" data-i18n="mtag.youth">Youth</span><span class="mtag"
+                                data-i18n="mtag.oneday">One day</span></div>
+                    </div>
+                </div>
+                <div class="media-card glass">
+                    <div class="media-banner">
+                        <div class="media-banner-img"
+                            style="background:linear-gradient(160deg,#0a1200,#1e3a10,#4a7a28);background-image:url('https://media.giphy.com/media/3o6fIUVP0DJ7MYVb6E/giphy.gif');background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;">
+                        </div>
+                        <div class="media-num">06</div><span class="media-year">2017</span>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-sub">Francis Lee</div>
+                        <h3>God's Own Country</h3>
+                        <p class="media-why" data-i18n="movie6.why">Rough, quiet, and deeply human. No drama for drama's
+                            sake — just two people being real with each other. Authenticity in its purest, most
+                            unpolished form.</p>
+                        <div class="media-tags"><span class="mtag" data-i18n="mtag.raw">Raw</span><span class="mtag"
+                                data-i18n="mtag.quiet">Quiet intensity</span><span class="mtag"
+                                data-i18n="mtag.human">Human</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ══ MUSIC ══ -->
+    <section id="music" class="content-sec">
+        <video class="sec-video" data-src="./videos/music.mp4" data-src-sd="./videos/music-mobile.mp4" preload="none"
+            loop muted playsinline></video>
+        <div class="sec-overlay"
+            style="background:linear-gradient(160deg,rgba(26,20,16,0.82) 0%,rgba(18,14,10,0.55) 100%);"></div>
+        <div class="sec-inner">
+            <div class="sec-label fade-in center" data-i18n="music.label">Hieu's playlist</div>
+            <div class="sec-title fade-in center" data-i18n="music.title">My Artists</div>
+            <p class="sec-sub fade-in center" data-i18n="music.sub">The artists living rent-free in my head — and why
+                they should live in yours too.</p>
+            <div class="media-grid fade-in">
+                <div class="media-card glass">
+                    <div class="media-banner a1">
+                        <div class="media-num">01</div>
+                        <div class="vinyl"></div><span class="media-year" data-i18n="since.2010">Since 2010</span>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-sub">Dream pop · Baroque pop · Sad girl cinema</div>
+                        <h3>Lana Del Rey</h3>
+                        <p class="media-why" data-i18n="artist1.why">She writes like someone who makes movies in their
+                            head — melancholic, cinematic, American mythology filtered through sadness and beauty. If
+                            you love Wong Kar-wai films, you already love Lana. Same melancholy, different medium.
+                            Funfact: I can sing all her songs!</p>
+                        <div class="media-tags"><span class="mtag" data-i18n="atag.cinematic">Cinematic</span><span
+                                class="mtag" data-i18n="atag.nostalgic">Nostalgic</span><span class="mtag"
+                                data-i18n="atag.poetic">Poetic</span></div>
+                    </div>
+                </div>
+                <div class="media-card glass">
+                    <div class="media-banner a2">
+                        <div class="media-num">02</div>
+                        <div class="vinyl"></div><span class="media-year" data-i18n="since.2004">Since 2004</span>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-sub">Pop punk · Alternative rock · Anthemic</div>
+                        <h3>Paramore</h3>
+                        <p class="media-why" data-i18n="artist2.why">Pure energy and emotional honesty — they've
+                            reinvented themselves multiple times without losing their core. The kind of band that hits
+                            differently depending on where you are in life. Perfect for gym at 6 PM.</p>
+                        <div class="media-tags"><span class="mtag" data-i18n="atag.energy">High energy</span><span
+                                class="mtag" data-i18n="atag.emotional">Emotional</span><span class="mtag"
+                                data-i18n="atag.anthemic">Anthemic</span></div>
+                    </div>
+                </div>
+                <div class="media-card glass">
+                    <div class="media-banner a3">
+                        <div class="media-num">03</div>
+                        <div class="vinyl"></div><span class="media-year" data-i18n="since.2018">Since 2018</span>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-sub">Post-rock · Avant-garde · Maximalist</div>
+                        <h3>Black Country, New Road</h3>
+                        <p class="media-why" data-i18n="artist3.why">Chaotic, literary, and completely unlike anything
+                            else. Their songs feel like reading a great novel — dense with meaning, always changing. I
+                            like Basketball Shoes the most!</p>
+                        <div class="media-tags"><span class="mtag">Avant-garde</span><span class="mtag"
+                                data-i18n="atag.literary">Literary</span><span class="mtag"
+                                data-i18n="atag.complex">Complex</span></div>
+                    </div>
+                </div>
+                <div class="media-card glass">
+                    <div class="media-banner a4">
+                        <div class="media-num">04</div>
+                        <div class="vinyl"></div><span class="media-year" data-i18n="since.2002">Since 2002</span>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-sub">Indie rock · Psych rock · Dry wit</div>
+                        <h3>Arctic Monkeys</h3>
+                        <p class="media-why" data-i18n="artist4.why">Alex Turner writes lyrics like a novelist — sharp,
+                            witty, loaded with imagery. Every album is a different world. A band that rewards you for
+                            paying attention. Start with <em>Humbug</em> if you haven't.</p>
+                        <div class="media-tags"><span class="mtag" data-i18n="atag.story">Storytelling</span><span
+                                class="mtag" data-i18n="atag.sharp">Sharp lyrics</span><span class="mtag"
+                                data-i18n="atag.world">World-building</span></div>
+                    </div>
+                </div>
+                <div class="media-card glass">
+                    <div class="media-banner a5">
+                        <div class="media-num">05</div>
+                        <div class="vinyl"></div><span class="media-year" data-i18n="since.2010b">Since 2010</span>
+                    </div>
+                    <div class="media-body">
+                        <div class="media-sub">Art pop · Futurist · Otherworldly</div>
+                        <h3>Grimes</h3>
+                        <p class="media-why" data-i18n="artist5.why">She builds entirely new sonic universes from
+                            scratch. Weird, beautiful, futuristic, and completely uncompromising. Authentic in the most
+                            alien way possible. You respect that.</p>
+                        <div class="media-tags"><span class="mtag"
+                                data-i18n="atag.universe">Universe-builder</span><span class="mtag"
+                                data-i18n="atag.futurist">Futurist</span><span class="mtag"
+                                data-i18n="atag.uncompromising">Uncompromising</span></div>
+                    </div>
+                </div>
+            </div>
+            <div id="now-playing-wrap">
+                <a id="now-playing-widget" class="glass" href="https://open.spotify.com" target="_blank" rel="noopener">
+                    <div id="np-art-wrap"><img id="np-art" src="" alt="album art" />
+                        <div id="np-vinyl"></div>
+                    </div>
+                    <div id="np-info">
+                        <div id="np-status"><span
+                                id="np-bars"><span></span><span></span><span></span><span></span></span><span
+                                id="np-label">Offline</span></div>
+                        <div id="np-title">Not listening right now</div>
+                        <div id="np-artist">Last seen: Saigon, 6PM gym playlist</div>
+                        <div id="np-progress-track">
+                            <div id="np-progress-fill"></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
 
-function loadAndPlay(video) {
-  if (video.dataset.loaded) { video.play(); return; }
-  video.dataset.loaded = '1';
-  const sourceEl = video.querySelector('source');
-  // prefer SD override, then normal source; support both <video data-src> and <source data-src>
-  const src = video.dataset.srcSd || video.dataset.src || sourceEl?.dataset.srcSd || sourceEl?.dataset.src;
-  if (!src) return;
-  if (video.tagName === 'VIDEO' && sourceEl) {
-    sourceEl.src = src;
-  } else {
-    video.src = src;
-  }
-  video.load();
-  video.addEventListener('canplay', function onReady() {
-    video.play().catch(()=>{});
-    setTimeout(() => video.classList.add('loaded'), 80);
-    video.removeEventListener('canplay', onReady);
-  }, {once:true});
-}
+    <!-- ══ FOOTER ══ -->
+    <footer id="contact">
+        <p data-i18n="footer.text">Made with <span class="heart">♥</span> somewhere between a lecture and the gym ·
+            Let's connect, Hieu.</p>
+        <div class="social-row">
+            <a class="social-btn" href="https://m.facebook.com/nguyenba.hieu.520">facebook</a>
+            <a class="social-btn" href="#" data-i18n="footer.social">Not gr*ndr</a>
+        </div>
+    </footer>
 
-// Hero — load immediately on desktop, skip on mobile
-const heroVideo = document.getElementById('hero-video');
-if (!isMobile) {
-  loadAndPlay(heroVideo);
-} else {
-  // mobile: just show a warm dark bg, no video
-  heroVideo.style.display = 'none';
-}
-
-// Section videos — load only when 300px from viewport
-// pause immediately when leaving viewport (saves bandwidth + CPU)
-if (!isMobile) {
-  const secVideos = document.querySelectorAll('.sec-video[data-src]');
-
-  const playObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const v = entry.target;
-      if (entry.isIntersecting) {
-        loadAndPlay(v);
-      } else {
-        if (!v.paused) v.pause();
-      }
-    });
-  }, { rootMargin: '300px 0px', threshold: 0 });
-
-  secVideos.forEach(v => {
-    v.setAttribute('preload', 'none');
-    playObserver.observe(v);
-  });
-}
-
-// ══════════════════════════════════════
-// NAV SCROLL EFFECT
-// ══════════════════════════════════════
-const nav = document.getElementById('main-nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-}, {passive:true});
-
-// ══════════════════════════════════════
-// FILM CUT TRANSITIONS
-// ══════════════════════════════════════
-const cut = document.getElementById('film-cut');
-const sections = document.querySelectorAll('section.content-sec');
-const cutObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      cut.classList.add('flash');
-      setTimeout(() => cut.classList.remove('flash'), 120);
-    }
-  });
-}, {threshold:0.15});
-sections.forEach(s => cutObserver.observe(s));
-
-// ══════════════════════════════════════
-// FADE-IN ON SCROLL
-// ══════════════════════════════════════
-const fadeEls = document.querySelectorAll('.fade-in');
-const fadeObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 60);
-      fadeObserver.unobserve(entry.target);
-    }
-  });
-}, {threshold:0.1, rootMargin:'0px 0px -40px 0px'});
-fadeEls.forEach(el => fadeObserver.observe(el));
-
-// ══════════════════════════════════════
-// PARALLAX (desktop only)
-// ══════════════════════════════════════
-if (!isMobile) {
-  const parallaxEls = document.querySelectorAll('.parallax-bg');
-  window.addEventListener('scroll', () => {
-    const sy = window.scrollY;
-    parallaxEls.forEach(el => {
-      const parent = el.closest('section');
-      if (!parent) return;
-      const rect = parent.getBoundingClientRect();
-      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-      const offset = (rect.top / window.innerHeight) * 40;
-      el.style.transform = `translateY(${offset}px)`;
-    });
-  }, {passive:true});
-}
-
-// ══════════════════════════════════════
-// BUTTON HINTS
-// ══════════════════════════════════════
-const timers = {};
-function showHint(el, ms, key) {
-  el.classList.add('show');
-  clearTimeout(timers[key]);
-  timers[key] = setTimeout(() => el.classList.remove('show'), ms);
-}
-document.getElementById('say-hello-btn').addEventListener('click', () => showHint(document.getElementById('say-hello-hint'), 3000, 'hello'));
-document.getElementById('explore-btn').addEventListener('click', () => showHint(document.getElementById('explore-hint'), 2000, 'explore'));
-
-// ══════════════════════════════════════
-// FEED — LOAD FROM feed.json
-// ══════════════════════════════════════
-const typeClass = {building:'ft-building',watching:'ft-watching',listening:'ft-listening',thinking:'ft-thinking',shipping:'ft-shipping'};
-let feedData = [];
-let activeFilters = new Set(['all']);
-
-function renderFeed() {
-  const list = document.getElementById('feed-list');
-  const empty = document.getElementById('feed-empty');
-  const isAll = activeFilters.has('all');
-  const filtered = isAll ? feedData : feedData.filter(entry => {
-    const allTags = [entry.type, ...(entry.tags||[])];
-    return [...activeFilters].every(f => allTags.includes(f));
-  });
-  list.querySelectorAll('.feed-entry').forEach(e => e.remove());
-  if (filtered.length === 0) {
-    empty.style.display = 'block';
-    return;
-  }
-  empty.style.display = 'none';
-  filtered.forEach(entry => {
-    const el = document.createElement('div');
-    el.className = 'feed-entry glass';
-    const tc = typeClass[entry.type] || 'ft-thinking';
-    const d = new Date(entry.date);
-    const dateStr = d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-    const linkHTML = entry.link ? `<a href="${entry.link}" target="_blank" rel="noopener">↗</a>` : '';
-    const tagsHTML = (entry.tags||[]).map(t=>`<span class="feed-tag">${t}</span>`).join('');
-    el.innerHTML = `<div class="feed-top"><span class="feed-type ${tc}">${entry.type}</span><span class="feed-date">${dateStr}</span></div><div class="feed-text">${entry.text} ${linkHTML}</div>${tagsHTML?`<div class="feed-tags">${tagsHTML}</div>`:''}`;
-    list.appendChild(el);
-  });
-}
-
-async function loadFeed() {
-  try {
-    const res = await fetch('./feed.json');
-    feedData = await res.json();
-    feedData.sort((a,b) => new Date(b.date)-new Date(a.date));
-    renderFeed();
-  } catch(e) {
-    feedData = [
-      {date:'2026-03-27',type:'building',text:'New site just dropped. La La Land aesthetic, glass cards, video backgrounds per section. Took a while but felt right.',tags:['building','proud of this']},
-      {date:'2026-03-25',type:'thinking',text:'The hardest part of a personal site isn\'t the code. It\'s deciding who you want to be when someone googles you.',tags:['thinking','late night']},
-      {date:'2026-03-22',type:'building',text:'IDOMA HUB — restarting from scratch with a clearer idea. 5 learner archetypes, CEFR scoring. This one feels real.',tags:['building','in progress','obsessing']},
-      {date:'2026-03-18',type:'watching',text:'Rewatched Happy Together. Still devastates. The Buenos Aires footage hits different at 1am.',tags:['watching','melancholy','late night']},
-      {date:'2026-03-14',type:'shipping',text:'Sketchs is done. 40 pages, a whole story. My first completed comic. Nano Banana2 made it better than I could alone.',tags:['shipping','proud of this']},
-      {date:'2026-03-10',type:'listening',text:'Black Country, New Road — Basketball Shoes on repeat. The outro alone is 8 minutes and I\'ve listened to it 14 times.',tags:['listening','obsessing']}
-    ];
-    renderFeed();
-  }
-}
-
-document.getElementById('feed-filters').addEventListener('click', e => {
-  const btn = e.target.closest('.feed-filter');
-  if (!btn) return;
-  const filter = btn.dataset.filter;
-  if (filter === 'all') {
-    activeFilters.clear();
-    activeFilters.add('all');
-  } else {
-    activeFilters.delete('all');
-    if (activeFilters.has(filter)) {
-      activeFilters.delete(filter);
-      if (activeFilters.size === 0) activeFilters.add('all');
-    } else {
-      activeFilters.add(filter);
-    }
-  }
-  document.querySelectorAll('.feed-filter').forEach(f => {
-    f.classList.toggle('active', activeFilters.has(f.dataset.filter));
-  });
-  renderFeed();
-});
-
-loadFeed();
-
-// ══════════════════════════════════════
-// SPOTIFY NOW PLAYING (plug in your worker URL)
-// ══════════════════════════════════════
-(function() {
-  const WORKER_URL = '';  // ← paste your Cloudflare Worker URL here
-  if (!WORKER_URL) return;
-  const widget = document.getElementById('now-playing-widget');
-  const art = document.getElementById('np-art');
-  const title = document.getElementById('np-title');
-  const artist = document.getElementById('np-artist');
-  const label = document.getElementById('np-label');
-  const fill = document.getElementById('np-progress-fill');
-  async function fetchNow() {
-    try {
-      const data = await fetch(WORKER_URL).then(r=>r.json());
-      if (data.isPlaying) {
-        widget.classList.add('playing'); widget.classList.remove('idle');
-        widget.href = data.songUrl;
-        art.src = data.albumArt||'';
-        title.textContent = data.title;
-        artist.textContent = data.artist;
-        label.textContent = 'Now playing';
-        fill.style.width = ((data.progress/data.duration)*100)+'%';
-      } else {
-        widget.classList.add('idle'); widget.classList.remove('playing');
-        widget.href = 'https://open.spotify.com';
-        title.textContent = 'Not listening right now';
-        artist.textContent = 'Last seen: Saigon, 6PM gym playlist';
-        label.textContent = 'Offline';
-        fill.style.width = '0%';
-      }
-    } catch(e) {}
-  }
-  fetchNow();
-  setInterval(fetchNow, 30000);
-})();
-
-// ══════════════════════════════════════
-// BACKGROUND MUSIC
-// ══════════════════════════════════════
-(function() {
-  const audio = new Audio('./music.mp3');
-  audio.loop = true;
-  audio.preload = 'auto';
-  audio.volume = 0;
-
-  let started = false;
-  let isStarting = false;
-  let muted = false;
-
-  // Fade volume in/out smoothly
-  function fadeTo(target, duration) {
-    const start = audio.volume;
-    const diff = target - start;
-    const steps = 40;
-    const interval = duration / steps;
-    let step = 0;
-    const t = setInterval(() => {
-      step++;
-      audio.volume = Math.min(1, Math.max(0, start + diff * (step / steps)));
-      if (step >= steps) clearInterval(t);
-    }, interval);
-  }
-
-  function startMusic() {
-    if (started || isStarting) return;
-    isStarting = true;
-    audio.play().then(() => {
-      started = true;
-      fadeTo(0.28, 2000);
-    }).catch(() => {
-      // Keep music startable on next user gesture if the first attempt is blocked.
-      started = false;
-    }).finally(() => {
-      isStarting = false;
-    });
-  }
-
-  // Start on first click anywhere on the page.
-  document.addEventListener('click', startMusic, { once: true, capture: true });
-
-  // ── MUSIC BUTTON ──
-  const btn = document.getElementById('music-toggle-btn');
-  if (!btn) return;
-
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (!started) { startMusic(); return; }
-    muted = !muted;
-    if (muted) {
-      fadeTo(0, 800);
-      btn.classList.add('muted');
-      btn.title = 'Play music';
-    } else {
-      fadeTo(0.28, 800);
-      btn.classList.remove('muted');
-      btn.title = 'Mute music';
-    }
-  });
-
-  // Fade down when tab hidden, back up when visible
-  document.addEventListener('visibilitychange', () => {
-    if (!started || muted) return;
-    document.hidden ? fadeTo(0.06, 600) : fadeTo(0.28, 800);
-  });
-})();
-</script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="app.js"></script>
 </body>
+
 </html>
